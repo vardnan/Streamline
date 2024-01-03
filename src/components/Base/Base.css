@@ -1,0 +1,45 @@
+#parent {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    gap: 33px;
+    padding-top: 80px;
+}
+
+#container-one {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100%;
+    gap: 33px;
+}
+
+#container-two {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100%;
+    gap: 33px;
+}
+
+#base {
+    width: 802px;
+    height: 698px;
+    border-radius: 25px;
+    background: #F6F6F6;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5px);
+    order: 1;
+}

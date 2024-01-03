@@ -1,0 +1,83 @@
+.card {
+    width: 310px;
+    border-radius: 25px;
+    background: #FFF;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+    transition: all .3s ease-in-out;
+    padding: 0px;
+    overflow: hidden;
+    border: 0;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.color-block {
+    width: 100%;
+    position: absolute;
+    transition: all .3s ease-in-out;
+}
+
+#card-one .color-block {
+    height: 33%;
+    top: 0;
+    left: 0;
+}
+
+#card-one:hover .color-block {
+    height: calc(33% + 10%);
+}
+
+#card-two .color-block {
+    height: 63%;
+    bottom: 0;
+    right: 0;
+}
+
+#card-two:hover .color-block {
+    height: calc(63% + 10%);
+}
+
+#card-three .color-block {
+    height: 50%;
+    bottom: 0;
+    right: 0;
+}
+
+#card-three:hover .color-block {
+    height: calc(50% + 10%);
+}
+
+#card-four .color-block {
+    height: 40%;
+    bottom: 0;
+    right: 0;
+}
+
+#card-four:hover .color-block {
+    height: calc(40% + 10%);
+}
+
+#card-one {
+    order: 1;
+    height: 385px;
+}
+
+#card-three {
+    order: 2;
+    height: 156px;
+
+}
+
+#card-two {
+    order: 1;
+    height: 324px;
+}
+
+#card-four {
+    order: 2;
+    height: 187px;
+}
