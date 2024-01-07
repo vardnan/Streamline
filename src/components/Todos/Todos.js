@@ -1,15 +1,14 @@
-import React from 'react';
-import { easeInOut, motion } from 'framer-motion';
+import { React } from 'react';
+import { motion } from 'framer-motion';
 import '../Pages/Page.css';
 
-const Todos = ({ todos }) => {
-  // Container variants
+const Todos = ({ todos, checkTodo, checkedColor }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15 // Stagger the animation of children
+        staggerChildren: 0.15, // Stagger the animation of children
       },
     },
   };
@@ -37,8 +36,24 @@ const Todos = ({ todos }) => {
           className="todo"
           variants={itemVariants} // Use variants for each item
         >
-          <button className="todo-button"></button>
-          <p className="todo-text">{todo.text}</p>
+          <button
+            className="todo-button"
+            style={{
+              backgroundColor: todo.isChecked ? checkedColor : '#FFF',
+              borderColor: checkedColor,
+            }}
+            onClick={() => checkTodo(todo.id)}
+          ></button>
+          <p
+            className="todo-text"
+            style={{
+              textDecoration: todo.isChecked ? 'line-through' : 'none',
+              color: todo.isChecked ? checkedColor : '#201B20',
+              opacity: todo.isChecked ? 0.8 : 1
+            }}
+          >
+            {todo.text}
+          </p>
         </motion.div>
       ))}
     </motion.div>

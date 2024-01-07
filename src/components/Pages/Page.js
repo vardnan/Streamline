@@ -10,22 +10,22 @@ const Page = () => {
 
   let initialTodos = {
     importantUrgent: [
-      { id: Math.random(), text: 'Buy groceries asap' },
-      { id: Math.random(), text: 'Schedule meeting now' },
+      { isChecked: false, id: Math.random(), text: 'Buy groceries asap' },
+      { isChecked: false, id: Math.random(), text: 'Schedule meeting now' },
       { id: Math.random(), text: 'Read book today' },
     ],
     importantNotUrgent: [
-      { id: Math.random(), text: 'Buy groceries later' },
-      { id: Math.random(), text: 'Schedule meeting later' },
-      { id: Math.random(), text: 'Read book later' },
+      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
+      { isChecked: false, id: Math.random(), text: 'Schedule meeting later' },
+      { isChecked: false, id: Math.random(), text: 'Read book later' },
     ],
     notImportantUrgent: [
-      { id: Math.random(), text: 'Buy groceries later' },
+      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
       { id: Math.random(), text: 'Read book later' },
     ],
     notImportantNotUrgent: [
-      { id: Math.random(), text: 'Buy groceries later' },
-      { id: Math.random(), text: 'Schedule meeting later' },
+      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
+      { isChecked: false, id: Math.random(), text: 'Schedule meeting later' },
     ],
   };
 
@@ -44,9 +44,28 @@ const Page = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
+  const checkTodo = (todoId) => {
+    const checkedTodos = todos[currentCategory].map((todo) => {
+      if (todo.id === todoId) {
+        return { ...todo, isChecked: !todo.isChecked };
+      }
+      return todo;
+    });
+
+    setTodos({
+      ...todos,
+      [currentCategory]: checkedTodos,
+    });
+  };
+
   // Add a new todo to the current category
   const addTodo = () => {
-    const newTodo = { id: Math.random(), text: 'New thing to do' };
+    const newTodo = {
+      isChecked: false,
+      id: Math.random(),
+      text: 'New thing to do',
+    };
+
     const updatedTodos = {
       ...todos,
       [currentCategory]: [newTodo, ...todos[currentCategory]],
@@ -55,6 +74,7 @@ const Page = () => {
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
+
   return (
     <motion.div id="page-container">
       <Link id="streamline-logo" to={'/'}>
@@ -123,7 +143,12 @@ const Page = () => {
             </button>
           </motion.div>
         </div>
-        <Todos key={currentCategory} todos={todos[currentCategory]} />
+        <Todos
+          key={currentCategory}
+          todos={todos[currentCategory]}
+          checkTodo={checkTodo}
+          checkedColor={color}
+        />
       </motion.div>
     </motion.div>
   );
