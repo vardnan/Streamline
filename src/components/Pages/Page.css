@@ -123,8 +123,9 @@
     width: 25px;
     height: 25px;
     border-radius: 3px;
-    border: 1px solid #201B20;
+    border: 1px solid;
     background: #FFF;
+    transition: all .2s ease-in-out;
 }
 
 .todo-text {
@@ -134,4 +135,15 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    transition: all .2s ease-in-out;
 }
+
+.checked-todo-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    border: 1px solid #201B20;
+    background: #201B20;
+    transition: all .2s ease-in-out;
+}
+
