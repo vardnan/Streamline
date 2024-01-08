@@ -1,33 +1,15 @@
 import React, { useState, useEffect } from 'react'; // Make sure to import useEffect
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, easeInOut, AnimatePresence } from 'framer-motion';
+import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
 import Todos from '../Todos/Todos';
+import { initialTodos } from '../../data';
 
 const Page = () => {
   const location = useLocation();
   const { color, priorityText } = location.state;
-
-  let initialTodos = {
-    importantUrgent: [
-      { isChecked: false, id: Math.random(), text: 'Buy groceries asap' },
-      { isChecked: false, id: Math.random(), text: 'Schedule meeting now' },
-      { id: Math.random(), text: 'Read book today' },
-    ],
-    importantNotUrgent: [
-      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
-      { isChecked: false, id: Math.random(), text: 'Schedule meeting later' },
-      { isChecked: false, id: Math.random(), text: 'Read book later' },
-    ],
-    notImportantUrgent: [
-      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
-      { id: Math.random(), text: 'Read book later' },
-    ],
-    notImportantNotUrgent: [
-      { isChecked: false, id: Math.random(), text: 'Buy groceries later' },
-      { isChecked: false, id: Math.random(), text: 'Schedule meeting later' },
-    ],
-  };
 
   const getInitialTodos = () => {
     const savedTodos = localStorage.getItem('todos');
@@ -62,7 +44,7 @@ const Page = () => {
   const addTodo = () => {
     const newTodo = {
       isChecked: false,
-      id: Math.random(),
+      id: uuidv4(),
       text: 'New thing to do',
     };
 
@@ -73,6 +55,19 @@ const Page = () => {
 
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  };
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const categoryTodos = Array.from(todos[currentCategory]);
+    const [reorderedItem] = categoryTodos.splice(result.source.index, 1);
+    categoryTodos.splice(result.destination.index, 0, reorderedItem);
+
+    setTodos({
+      ...todos,
+      [currentCategory]: categoryTodos,
+    });
   };
 
   return (
@@ -143,12 +138,14 @@ const Page = () => {
             </button>
           </motion.div>
         </div>
-        <Todos
-          key={currentCategory}
-          todos={todos[currentCategory]}
-          checkTodo={checkTodo}
-          checkedColor={color}
-        />
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Todos
+            key={currentCategory}
+            todos={todos[currentCategory]}
+            checkTodo={checkTodo}
+            checkedColor={color}
+          />
+        </DragDropContext>
       </motion.div>
     </motion.div>
   );
