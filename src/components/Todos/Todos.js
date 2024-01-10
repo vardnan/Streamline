@@ -38,57 +38,66 @@ const Todos = ({ todos, checkTodo, checkedColor }) => {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {todos.map((todo, index) => (
-              <Draggable
-                key={todo.id.toString()}
-                draggableId={todo.id.toString()}
-                index={index}
-              >
-                {(provided) => (
-                  <li
-                    {...{
-                      ...provided.draggableProps,
-                      style: {
+            {todos.map((todo, index) => {
+              return (
+                <Draggable
+                  key={todo.id.toString()}
+                  draggableId={todo.id.toString()}
+                  index={index}
+                >
+                  {(provided) => (
+                    <li
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={{
                         ...provided.draggableProps.style,
-                        position: 'static',
-                      },
-                    }}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                  >
-                    <motion.div
-                      className="todo"
-                      variants={itemVariants} // Use variants for each item
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ opacity: 0.7 }}
+                        position: 'static', // or other required styles
+                      }}
                     >
-                      <button
-                        className="todo-button"
-                        style={{
-                          backgroundColor: todo.isChecked
-                            ? checkedColor
-                            : '#FFF',
-                          borderColor: checkedColor,
-                        }}
-                        onClick={() => checkTodo(todo.id)}
-                      ></button>
-                      <p
-                        className="todo-text"
-                        style={{
-                          textDecoration: todo.isChecked
-                            ? 'line-through'
-                            : 'none',
-                          color: todo.isChecked ? checkedColor : '#201B20',
-                          opacity: todo.isChecked ? 0.8 : 1,
-                        }}
+                      <motion.div
+                        className="todo"
+                        variants={itemVariants} // Use variants for each item
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ opacity: 0.7 }}
                       >
-                        {todo.text}
-                      </p>
-                    </motion.div>
-                  </li>
-                )}
-              </Draggable>
-            ))}
+                        {todo.type === 'header' ? (
+                          <p className="todo-header-text" style={{color: checkedColor}}>{todo.text}</p>
+                        ) : (
+                          <>
+                            <button
+                              className="todo-button"
+                              style={{
+                                backgroundColor: todo.isChecked
+                                  ? checkedColor
+                                  : '#FFF',
+                                borderColor: checkedColor,
+                              }}
+                              onClick={() => checkTodo(todo.id)}
+                            ></button>
+                            <p
+                              className="todo-text"
+                              style={{
+                                textDecoration: todo.isChecked
+                                  ? 'line-through'
+                                  : 'none',
+                                color: todo.isChecked
+                                  ? checkedColor
+                                  : '#201B20',
+                                opacity: todo.isChecked ? 0.8 : 1,
+                              }}
+                              onClick={() => checkTodo(todo.id)}
+                            >
+                              {todo.text}
+                            </p>
+                          </>
+                        )}
+                      </motion.div>
+                    </li>
+                  )}
+                </Draggable>
+              );
+            })}
             {provided.placeholder}
           </ul>
         )}

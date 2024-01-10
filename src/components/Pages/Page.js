@@ -45,7 +45,7 @@ const Page = () => {
     const newTodo = {
       isChecked: false,
       id: uuidv4(),
-      text: 'New thing to do',
+      text: 'new thing to do',
     };
 
     const updatedTodos = {

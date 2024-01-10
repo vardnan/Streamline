@@ -1,22 +1,30 @@
+// data.js
 import { v4 as uuidv4 } from 'uuid';
 
 export const initialTodos = {
-    importantUrgent: [
-      { isChecked: false, id: uuidv4(), text: 'Buy groceries asap' },
-      { isChecked: false, id: uuidv4(), text: 'Schedule meeting now' },
-      { isChecked: false, id: uuidv4(), text: 'Read book today' },
-    ],
-    importantNotUrgent: [
-      { isChecked: false, id: uuidv4(), text: 'Buy groceries later' },
-      { isChecked: false, id: uuidv4(), text: 'Schedule meeting later' },
-      { isChecked: false, id: uuidv4(), text: 'Read book later' },
-    ],
-    notImportantUrgent: [
-      { isChecked: false, id: uuidv4(), text: 'Buy groceries later' },
-      { isChecked: false, id: uuidv4(), text: 'Read book later' },
-    ],
-    notImportantNotUrgent: [
-      { isChecked: false, id: uuidv4(), text: 'Buy groceries later' },
-      { isChecked: false, id: uuidv4(), text: 'Schedule meeting later' },
-    ],
-  };
+  importantUrgent: [
+    { type: 'header', id: uuidv4(), text: 'scheduled' },
+    // ... other to-do items for importantUrgent
+    { type: 'header', id: uuidv4(), text: 'not scheduled' },
+    // ... other to-do items for importantUrgent
+  ],
+  importantNotUrgent: [
+    { type: 'header', id: uuidv4(), text: 'scheduled' },
+    // ... other to-do items for importantNotUrgent
+    { type: 'header', id: uuidv4(), text: 'not scheduled' },
+    // ... other to-do items for importantNotUrgent
+  ],
+  notImportantUrgent: [
+    { type: 'header', id: uuidv4(), text: 'scheduled' },
+    // ... other to-do items for notImportantUrgent
+    { type: 'header', id: uuidv4(), text: 'not scheduled' },
+    // ... other to-do items for notImportantUrgent
+  ],
+  notImportantNotUrgent: [
+    { type: 'header', id: uuidv4(), text: 'scheduled' },
+    // ... other to-do items for notImportantNotUrgent
+    { type: 'header', id: uuidv4(), text: 'not scheduled' },
+    // ... other to-do items for notImportantNotUrgent
+  ],
+  // ... add more categories if necessary
+};
