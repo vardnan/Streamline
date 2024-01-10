@@ -20,6 +20,8 @@ const Page = () => {
   // Corrected useState for currentCategory
   const [todos, setTodos] = useState(getInitialTodos);
   const [currentCategory, setCurrentCategory] = useState('importantUrgent');
+  const [editingId, setEditingId] = useState(null);
+  const [editingText, setEditingText] = useState('');
 
   // useEffect to update localStorage when todos change
   useEffect(() => {
@@ -45,7 +47,7 @@ const Page = () => {
     const newTodo = {
       isChecked: false,
       id: uuidv4(),
-      text: 'new thing to do',
+      text: 'New thing to do',
     };
 
     const updatedTodos = {
@@ -70,6 +72,32 @@ const Page = () => {
     });
   };
 
+  const handleEdit = (todo) => {
+    setEditingId(todo.id);
+    setEditingText(todo.text);
+  };
+
+  const handleSave = (id) => {
+    console.log('Before saving, current todos:', todos);
+    console.log('Current category:', currentCategory);
+
+    const updatedTodosForCategory = todos[currentCategory].map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, text: editingText };
+      }
+      return todo;
+    });
+
+    const updatedTodos = {
+      ...todos,
+      [currentCategory]: updatedTodosForCategory,
+    };
+
+    console.log('After saving, updated todos:', updatedTodos);
+    setTodos(updatedTodos);
+    setEditingId(null);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  };
   return (
     <motion.div id="page-container">
       <Link id="streamline-logo" to={'/'}>
@@ -144,6 +172,11 @@ const Page = () => {
             todos={todos[currentCategory]}
             checkTodo={checkTodo}
             checkedColor={color}
+            editingText={editingText}
+            setEditingText={setEditingText}
+            editingId={editingId}
+            handleEdit={handleEdit}
+            handleSave={handleSave}
           />
         </DragDropContext>
       </motion.div>

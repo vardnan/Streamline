@@ -1,9 +1,21 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { easeInOut, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import '../Pages/Page.css';
+import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
-const Todos = ({ todos, checkTodo, checkedColor }) => {
+const Todos = ({
+  todos,
+  checkTodo,
+  checkedColor,
+  editingText,
+  setEditingText,
+  editingId,
+  handleEdit,
+  handleSave,
+
+}) => {
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -24,6 +36,11 @@ const Todos = ({ todos, checkTodo, checkedColor }) => {
     },
   };
 
+  const handleFocus = (event) => {
+    // Set the cursor position to the start of the text (position 0)
+    event.target.setSelectionRange(0, 0);
+  };
+
   return (
     <motion.div
       id="todos-container"
@@ -34,7 +51,7 @@ const Todos = ({ todos, checkTodo, checkedColor }) => {
       <Droppable droppableId="todos">
         {(provided) => (
           <ul
-            style={{ listStyle: 'none', margin: 0, padding: 0 }}
+            style={{ listStyle: 'none', margin: 0, padding: 0, width: '100%'}}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
@@ -58,11 +75,44 @@ const Todos = ({ todos, checkTodo, checkedColor }) => {
                       <motion.div
                         className="todo"
                         variants={itemVariants} // Use variants for each item
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ scale: 1.00 }}
                         whileTap={{ opacity: 0.7 }}
                       >
                         {todo.type === 'header' ? (
-                          <p className="todo-header-text" style={{color: checkedColor}}>{todo.text}</p>
+                          <p
+                            className="todo-header-text"
+                            style={{ color: checkedColor }}
+                          >
+                            {todo.text}
+                          </p>
+                        ) : editingId === todo.id ? (
+                          <>
+                            <button
+                              className="todo-button"
+                              style={{
+                                backgroundColor: todo.isChecked
+                                  ? checkedColor
+                                  : '#FFF',
+                                borderColor: checkedColor,
+                              }}
+                              onClick={() => checkTodo(todo.id)}
+                            ></button>
+                            <input 
+                            id='todo-text-editing'
+                            className='todo-text'
+                              type="text"
+                              value={editingText}
+                              onChange={(e) => setEditingText(e.target.value)}
+                              onBlur={() => handleSave(todo.id)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  handleSave(todo.id);
+                                }
+                              }}
+                              onFocus={handleFocus}
+                              autoFocus
+                            />
+                            </>
                         ) : (
                           <>
                             <button
@@ -87,6 +137,7 @@ const Todos = ({ todos, checkTodo, checkedColor }) => {
                                 opacity: todo.isChecked ? 0.8 : 1,
                               }}
                               onClick={() => checkTodo(todo.id)}
+                              onDoubleClick={() => handleEdit(todo)}
                             >
                               {todo.text}
                             </p>

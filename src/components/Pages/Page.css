@@ -107,6 +107,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 95%;
 }
 
 .todo {
@@ -138,6 +139,7 @@
     font-weight: 500;
     line-height: normal;
     transition: all .2s ease-in-out;
+    width: 100%;
 }
 
 .checked-todo-button {
@@ -157,4 +159,15 @@
     line-height: normal;
     transition: all .2s ease-in-out;
     text-decoration: underline;
+}
+
+#todo-text-editing {
+    outline: none;
+    border-style: none;
+    box-sizing:content-box;
+    background-color: transparent;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    opacity: 0.7;
 }
