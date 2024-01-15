@@ -9,7 +9,7 @@ import { initialTodos } from '../../data';
 
 const Page = () => {
   const location = useLocation();
-  const { color, priorityText } = location.state;
+  const { color, priorityText, todoCategory } = location.state;
 
   const getInitialTodos = () => {
     const savedTodos = localStorage.getItem('todos');
@@ -19,7 +19,7 @@ const Page = () => {
 
   // Corrected useState for currentCategory
   const [todos, setTodos] = useState(getInitialTodos);
-  const [currentCategory, setCurrentCategory] = useState('importantUrgent');
+  const [currentCategory, setCurrentCategory] = useState(todoCategory ? todoCategory : 'importantUrgent');
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
 
@@ -105,16 +105,16 @@ const Page = () => {
           id="streamline-button"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, type: easeInOut, delay: 0.4 }}
+          transition={{ duration: 1, type: easeInOut }}
         >
           Streamline
         </motion.button>
       </Link>
       <motion.div
         className="page"
-        initial={{ opacity: 0.5, scale: 5 }}
+        initial={{ opacity: 0.5, scale: 3 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, type: easeInOut }}
+        transition={{ duration: 0.7, type: easeInOut, delay: 0.2 }}
       >
         <div className="page-color-block" style={{ backgroundColor: color }}>
           <AnimatePresence mode="wait">
@@ -135,21 +135,21 @@ const Page = () => {
               state={{ color: color, priorityText: 'Important & urgent' }}
               onClick={() => setCurrentCategory('importantUrgent')}
             >
-              <button className="priority-button">1</button>
+              <button className="priority-button" style={{ opacity: currentCategory === 'importantUrgent' ? 0.75 : 1 }}>1</button>
             </Link>
             <Link
               to={'/todos'}
               state={{ color: color, priorityText: 'Important & not urgent' }}
               onClick={() => setCurrentCategory('importantNotUrgent')}
             >
-              <button className="priority-button">2</button>
+              <button className="priority-button" style={{ opacity: currentCategory === 'importantNotUrgent' ? 0.75 : 1 }}>2</button>
             </Link>
             <Link
               to={'/todos'}
               state={{ color: color, priorityText: 'Not important & urgent' }}
               onClick={() => setCurrentCategory('notImportantUrgent')}
             >
-              <button className="priority-button">3</button>
+              <button className="priority-button" style={{ opacity: currentCategory === 'notImportantUrgent' ? 0.75 : 1 }}>3</button>
             </Link>
             <Link
               to={'/todos'}
@@ -159,7 +159,7 @@ const Page = () => {
               }}
               onClick={() => setCurrentCategory('notImportantNotUrgent')}
             >
-              <button className="priority-button">4</button>
+              <button className="priority-button" style={{ opacity: currentCategory === 'notImportantNotUrgent' ? 0.75 : 1 }}>4</button>
             </Link>
             <button className="priority-button" onClick={addTodo}>
               +
