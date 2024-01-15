@@ -15,7 +15,13 @@ const Card = ({ identifier, blockColor, path, priority, category }) => {
       }}
     >
       <div>
-        <p>{priority}</p>
+        <p
+          style={{
+            color: priority === 'Important & urgent' ? 'white' : blockColor,
+          }}
+        >
+          {priority}
+        </p>
       </div>
       <div
         className="color-block"
