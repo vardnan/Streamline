@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { easeInOut, motion } from 'framer-motion';
+import { cubicBezier, motion } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
 import ColorButtons from '../ColorButtons/ColorButtons';
@@ -10,9 +10,9 @@ const Base = () => {
   return (
     <motion.div
       id="parent"
-      initial={{ opacity: 0, scale: 0.7 }}
+      initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, type: easeInOut, delay: 0.2}}
+      transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1)}}
     >
       <div id="base" className="container">
         <div id="container-one">

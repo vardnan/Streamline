@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
-import { motion, easeInOut, AnimatePresence } from 'framer-motion';
+import { motion, cubicBezier, AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
 import Todos from '../Todos/Todos';
@@ -105,7 +105,7 @@ const Page = () => {
           id="streamline-button"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, type: easeInOut }}
+          transition={{ duration: 1, type: cubicBezier(0.25, 1, 0.5, 1) }}
         >
           Streamline
         </motion.button>
@@ -114,7 +114,7 @@ const Page = () => {
         className="page"
         initial={{ opacity: 0.5, scale: 3 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, type: easeInOut, delay: 0.2 }}
+        transition={{ duration: 0.7, type: cubicBezier(0.25, 1, 0.5, 1), delay: 0.2 }}
       >
         <div className="page-color-block" style={{ backgroundColor: color }}>
           <AnimatePresence mode="wait">
@@ -123,7 +123,7 @@ const Page = () => {
               className="priority-text"
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'easeInOut', duration: 0.15 }}
+              transition={{ type: cubicBezier(0.25, 1, 0.5, 1), duration: 0.15 }}
               exit={{ opacity: 0, y: 5 }}
             >
               {priorityText}
