@@ -48,7 +48,7 @@ const Base = () => {
           />
         </div>
       </div>
-      <ColorButtons setBlockColor={setBlockColor} />
+      {/* <ColorButtons setBlockColor={setBlockColor} /> */}
     </motion.div>
   );
 };
