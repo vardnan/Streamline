@@ -12,12 +12,12 @@
 
 .card {
     width: clamp(290px, 40vw, 310px);
-    border-radius: 25px;
+    border-radius: 1.56rem;
     background: #FFF;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     position: relative;
     transition: all .6s cubic-bezier(0.25, 1, 0.5, 1);
-    padding: 0px;
+    padding: 0;
     overflow: hidden;
     border: 0;
 }
@@ -31,11 +31,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    margin: 0px;
-    margin-left: 25px;
-    margin-top: 25px;
+    margin: 0;
+    margin-left: 1.56rem;
+    margin-top: 1.56rem;
     z-index: 1;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -91,21 +91,25 @@
 
 #card-one {
     order: 1;
-    height: 385px;
+    /* height: 385px; */
+    height: 24rem;
 }
 
 #card-three {
     order: 2;
-    height: 175px;
+    /* height: 175px; */
+    height: 11rem;
 
 }
 
 #card-two {
     order: 1;
-    height: 324px;
+    /* height: 324px; */
+    height: 20.25rem;
 }
 
 #card-four {
     order: 2;
-    height: 200px;
+    /* height: 200px; */
+    height: 12.5rem;
 }

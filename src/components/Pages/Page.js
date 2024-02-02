@@ -100,6 +100,7 @@ const Page = () => {
   };
   return (
     <motion.div id="page-container">
+      <div style={{boxSizing: "border-box", overflow: "auto"}}>
       <Link id="streamline-logo" to={'/'}>
         <motion.button
           id="streamline-button"
@@ -180,6 +181,7 @@ const Page = () => {
           />
         </DragDropContext>
       </motion.div>
+      </div>
     </motion.div>
   );
 };
