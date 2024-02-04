@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
-import { motion, cubicBezier, AnimatePresence } from 'framer-motion';
+import { motion, cubicBezier, AnimatePresence, easeInOut, easeIn } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
 import Todos from '../Todos/Todos';
@@ -100,22 +100,22 @@ const Page = () => {
   };
   return (
     <motion.div id="page-container">
-      <div style={{boxSizing: "border-box", overflow: "auto"}}>
+      <div style={{boxSizing: "border-box"}}>
       <Link id="streamline-logo" to={'/'}>
         <motion.button
           id="streamline-button"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, type: cubicBezier(0.25, 1, 0.5, 1) }}
+          initial={{ opacity: 0, y: 3 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6, type: easeIn }}
         >
           Streamline
         </motion.button>
       </Link>
       <motion.div
         className="page"
-        initial={{ opacity: 0.5, scale: 3 }}
+        initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, type: cubicBezier(0.25, 1, 0.5, 1), delay: 0.2 }}
+        transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1)}}
       >
         <div className="page-color-block" style={{ backgroundColor: color }}>
           <AnimatePresence mode="wait">
