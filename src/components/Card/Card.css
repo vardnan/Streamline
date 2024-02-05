@@ -113,3 +113,20 @@
     /* height: 200px; */
     height: 12.5rem;
 }
+
+.priorityNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%; /* Makes the div circular */
+    position: absolute;
+    top: 0.8rem; /* Adjust as necessary for your layout */
+    right: 0.8rem; /* Adjust as necessary for your layout */
+    z-index: 1;
+    width: 2.625rem; /* Size of the circle */
+    height: 2.625rem; /* Size of the circle */
+    font-size: 1.25rem;
+    font-weight: 600; /* Adjust the font size as necessary */
+    color: #000; /* Change the text color as needed */
+}

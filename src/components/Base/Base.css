@@ -90,17 +90,18 @@
         flex-direction: column;
         justify-content: center;
     }
+
     .container {
         flex-direction: column;
     }
 
     #container-one {
         justify-content: center;
-        
+
     }
 
     #container-two {
         justify-content: center;
     }
-    
+
 }

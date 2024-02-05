@@ -2,7 +2,14 @@ import { React } from 'react';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
-const Card = ({ identifier, blockColor, path, priority, category }) => {
+const Card = ({
+  identifier,
+  blockColor,
+  path,
+  priority,
+  category,
+  priorityNumber,
+}) => {
   return (
     <Link
       className="card"
@@ -22,6 +29,16 @@ const Card = ({ identifier, blockColor, path, priority, category }) => {
         >
           {priority}
         </p>
+        <div
+          className="priorityNumber"
+          style={{
+            backgroundColor:
+              priority === 'Important & urgent' ? 'white' : blockColor,
+            color: priority === 'Important & urgent' ? blockColor : 'white',
+          }}
+        >
+          {priorityNumber}
+        </div>
       </div>
       <div
         className="color-block"
