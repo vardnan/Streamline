@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from 'framer-motion';
 import '../Pages/Page.css';
-import { setSelectionRange } from '@testing-library/user-event/dist/utils';
+import '../Todos/Todos.css';
 
 const Todos = ({
   todos,
@@ -34,11 +34,6 @@ const Todos = ({
       opacity: 1,
       transition: { type: 'spring' },
     },
-  };
-
-  const handleFocus = (event) => {
-    // Set the cursor position to the start of the text (position 0)
-    event.target.setSelectionRange(0, 0);
   };
 
   return (
@@ -109,7 +104,6 @@ const Todos = ({
                                   handleSave(todo.id);
                                 }
                               }}
-                              onFocus={handleFocus}
                               autoFocus
                             />
                             </>
