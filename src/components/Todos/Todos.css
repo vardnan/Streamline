@@ -42,6 +42,7 @@
     border: 0.0625rem solid;
     background: #FFF;
     transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 0;
 }
 
 .todo-text {
@@ -61,6 +62,7 @@
     border: 0.0625rem solid #201B20;
     background: #201B20;
     transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 0;
 }
 
 .todo-header-text {
