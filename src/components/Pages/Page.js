@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Make sure to import useEffect
+import React, { useState, useEffect, useRef } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
 import {
@@ -30,23 +30,78 @@ const Page = () => {
   );
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
+  const [countdowns, setCountdowns] = useState({});
+  const timeoutRefs = useRef({});
 
   // useEffect to update localStorage when todos change
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const checkTodo = (todoId) => {
-    const checkedTodos = todos[currentCategory].map((todo) => {
-      if (todo.id === todoId) {
-        return { ...todo, isChecked: !todo.isChecked };
-      }
-      return todo;
+  const deleteTodo = (todoId) => {
+    setTodos((currentTodos) => {
+      const updatedTodos = { ...currentTodos };
+      updatedTodos[currentCategory] = updatedTodos[currentCategory].filter(
+        (t) => t.id !== todoId
+      );
+
+      localStorage.setItem('todos', JSON.stringify(updatedTodos));
+
+      return updatedTodos;
     });
 
-    setTodos({
-      ...todos,
-      [currentCategory]: checkedTodos,
+    // Cleanup timeout reference
+    if (timeoutRefs.current[todoId]) {
+      clearTimeout(timeoutRefs.current[todoId]);
+      delete timeoutRefs.current[todoId];
+    }
+  };
+
+  const initiateCountdown = (todoId) => {
+    if (timeoutRefs.current[todoId]) {
+      clearTimeout(timeoutRefs.current[todoId]);
+    }
+
+    let countdown = 3;
+    setCountdowns((prev) => ({ ...prev, [todoId]: countdown }));
+    const intervalId = setInterval(() => {
+      countdown -= 1;
+      if (countdown <= 0) {
+        clearInterval(intervalId);
+        deleteTodo(todoId);
+      } else {
+        setCountdowns((prev) => ({ ...prev, [todoId]: countdown }));
+      }
+    }, 1000);
+
+    timeoutRefs.current[todoId] = intervalId;
+  };
+
+  const checkTodo = (todoId) => {
+    setTodos((currentTodos) => {
+      const updatedTodos = { ...currentTodos };
+      const todoIndex = updatedTodos[currentCategory].findIndex(
+        (t) => t.id === todoId
+      );
+
+      if (todoIndex > -1) {
+        const todo = updatedTodos[currentCategory][todoIndex];
+        todo.isChecked = !todo.isChecked;
+
+        if (todo.isChecked) {
+          initiateCountdown(todoId);
+        } else {
+          clearInterval(timeoutRefs.current[todoId]);
+          delete timeoutRefs.current[todoId];
+          setCountdowns((prev) => {
+            const newState = { ...prev };
+            delete newState[todoId];
+            return newState;
+          });
+        }
+      }
+
+      return updatedTodos;
     });
   };
 
@@ -56,6 +111,7 @@ const Page = () => {
       isChecked: false,
       id: uuidv4(),
       text: 'New thing to do',
+      isCountingDown: false,
     };
 
     const updatedTodos = {
@@ -237,6 +293,7 @@ const Page = () => {
               editingId={editingId}
               handleEdit={handleEdit}
               handleSave={handleSave}
+              countdowns={countdowns}
             />
           </DragDropContext>
         </motion.div>

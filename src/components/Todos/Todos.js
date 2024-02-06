@@ -13,9 +13,8 @@ const Todos = ({
   editingId,
   handleEdit,
   handleSave,
-
+  countdowns,
 }) => {
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,7 +45,7 @@ const Todos = ({
       <Droppable droppableId="todos">
         {(provided) => (
           <ul
-            style={{ listStyle: 'none', margin: 0, padding: 0, width: '100%'}}
+            style={{ listStyle: 'none', margin: 0, padding: 0, width: '100%' }}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
@@ -70,7 +69,7 @@ const Todos = ({
                       <motion.div
                         className="todo"
                         variants={itemVariants} // Use variants for each item
-                        whileHover={{ scale: 1.00 }}
+                        whileHover={{ scale: 1.0 }}
                         whileTap={{ opacity: 0.7 }}
                       >
                         {todo.type === 'header' ? (
@@ -92,9 +91,9 @@ const Todos = ({
                               }}
                               onClick={() => checkTodo(todo.id)}
                             ></button>
-                            <input 
-                            id='todo-text-editing'
-                            className='todo-text'
+                            <input
+                              id="todo-text-editing"
+                              className="todo-text"
                               type="text"
                               value={editingText}
                               onChange={(e) => setEditingText(e.target.value)}
@@ -106,7 +105,7 @@ const Todos = ({
                               }}
                               autoFocus
                             />
-                            </>
+                          </>
                         ) : (
                           <>
                             <button
@@ -118,7 +117,12 @@ const Todos = ({
                                 borderColor: checkedColor,
                               }}
                               onClick={() => checkTodo(todo.id)}
-                            ></button>
+                            >
+                              {todo.isChecked &&
+                                countdowns[todo.id] !== undefined && (
+                                  <span id="countdown-text">{countdowns[todo.id]}</span>
+                                )}
+                            </button>
                             <p
                               className="todo-text"
                               style={{
