@@ -36,13 +36,15 @@
 }
 
 .todo-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 1.56rem;
     height: 1.56rem;
     border-radius: 0.1875rem;
     border: 0.0625rem solid;
     background: #FFF;
     transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
-    padding: 0;
 }
 
 .todo-text {
@@ -56,13 +58,15 @@
 }
 
 .checked-todo-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 1.56rem;
     height: 1.56rem;
     border-radius: 3px;
     border: 0.0625rem solid #201B20;
     background: #201B20;
     transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
-    padding: 0;
 }
 
 .todo-header-text {
