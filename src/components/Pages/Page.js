@@ -100,7 +100,7 @@ const Page = () => {
       ...todos,
       [currentCategory]: updatedTodosForCategory,
     };
-    
+
     setTodos(updatedTodos);
     setEditingId(null);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
