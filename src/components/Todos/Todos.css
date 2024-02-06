@@ -46,7 +46,6 @@
 
 .todo-text {
     color: #201B20;
-    font-family: SF Pro Display;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
@@ -82,4 +81,9 @@
     margin-bottom: 0.9375rem;
     width: 100%;
     opacity: 0.7;
+}
+
+#countdown-text {
+    color: white;
+    font-weight: 500;
 }
