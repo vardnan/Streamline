@@ -12,8 +12,36 @@ const Base = () => {
       id="parent"
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1)}}
+      transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
     >
+      <div id="holder">
+      <div className="action-button">
+        <svg id="action-button-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="24"
+          viewBox="0 0 25 24"
+          fill="none"
+        >
+          <g clip-path="url(#clip0_769_46)">
+            <path
+              d="M8.5 18C9.05 18 9.5 17.55 9.5 17V7C9.5 6.45 9.05 6 8.5 6C7.95 6 7.5 6.45 7.5 7V17C7.5 17.55 7.95 18 8.5 18ZM12.5 22C13.05 22 13.5 21.55 13.5 21V3C13.5 2.45 13.05 2 12.5 2C11.95 2 11.5 2.45 11.5 3V21C11.5 21.55 11.95 22 12.5 22ZM4.5 14C5.05 14 5.5 13.55 5.5 13V11C5.5 10.45 5.05 10 4.5 10C3.95 10 3.5 10.45 3.5 11V13C3.5 13.55 3.95 14 4.5 14ZM16.5 18C17.05 18 17.5 17.55 17.5 17V7C17.5 6.45 17.05 6 16.5 6C15.95 6 15.5 6.45 15.5 7V17C15.5 17.55 15.95 18 16.5 18ZM19.5 11V13C19.5 13.55 19.95 14 20.5 14C21.05 14 21.5 13.55 21.5 13V11C21.5 10.45 21.05 10 20.5 10C19.95 10 19.5 10.45 19.5 11Z"
+              fill="#333333"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_769_46">
+              <rect
+                width="24"
+                height="24"
+                fill="white"
+                transform="translate(0.5)"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+        <p>help me plan</p>
+      </div>
       <div id="base" className="container">
         <div id="container-one">
           <Card
@@ -52,7 +80,7 @@ const Base = () => {
           />
         </div>
       </div>
-      {/* <ColorButtons setBlockColor={setBlockColor} /> */}
+      </div>
     </motion.div>
   );
 };
