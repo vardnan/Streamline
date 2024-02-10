@@ -2,12 +2,10 @@ import { React, useState } from 'react';
 import { cubicBezier, motion } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
-import Planning from '../Planning/Planning';
 
 const Base = () => {
-
-  // const [plannedTasks, setPlannedTasks] = useState([]);
-  // const [noTasksAvailable, setNoTasksAvailable] = useState(false);
+  const [plannedTasks, setPlannedTasks] = useState([]);
+  const [planTasks, setPlanTasks] = useState(false);
 
   const getAllTodos = () => {
     const todos = JSON.parse(localStorage.getItem('todos')) || {};
@@ -27,41 +25,69 @@ const Base = () => {
 
   const getPlannedTasks = () => {
     const { importantUrgentTodos, importantNotUrgentTodos } = getAllTodos();
-    
+
+    // Prompt for more tasks if there are none in either category
+    if (
+      importantUrgentTodos.length === 0 &&
+      importantNotUrgentTodos.length === 0
+    ) {
+      return 'Add more important tasks to get help planning';
+    }
+
+    // Initialize planned tasks
     const plannedTasks = {
       importantUrgentTasks: [],
-      importantNotUrgentTasks: []
+      importantNotUrgentTasks: [],
     };
-  
-    let plannedUrgentTasks = pickRandomTasks(importantUrgentTodos, 3);
-    let plannedNotUrgentTasks = [];
-  
-    if (plannedUrgentTasks.length < 3) {
-      // If there are not enough important & urgent tasks, fill with important & not urgent tasks
-      plannedNotUrgentTasks = pickRandomTasks(importantNotUrgentTodos, 3 - plannedUrgentTasks.length);
+
+    // Fill the importantUrgentTasks array with up to 3 tasks if there are enough tasks available
+    plannedTasks.importantUrgentTasks = pickRandomTasks(
+      importantUrgentTodos,
+      Math.min(3, importantUrgentTodos.length)
+    );
+
+    // Calculate how many tasks are still needed to reach 5
+    let slotsNeeded = 5 - plannedTasks.importantUrgentTasks.length;
+
+    // If important & urgent tasks are less than 3, we can take more important & not urgent tasks, otherwise, take up to 2
+    if (importantUrgentTodos.length < 3) {
+      plannedTasks.importantNotUrgentTasks = pickRandomTasks(
+        importantNotUrgentTodos,
+        slotsNeeded
+      );
     } else {
-      // If there are 3 or more important & urgent tasks, fill the rest with important & not urgent tasks
-      plannedNotUrgentTasks = pickRandomTasks(importantNotUrgentTodos, 2);
+      plannedTasks.importantNotUrgentTasks = pickRandomTasks(
+        importantNotUrgentTodos,
+        Math.min(2, slotsNeeded)
+      );
     }
-  
-    plannedTasks.importantUrgentTasks = plannedUrgentTasks;
-    plannedTasks.importantNotUrgentTasks = plannedNotUrgentTasks;
-  
-    // Ensure we don't have more than 5 tasks
-    if (plannedTasks.importantUrgentTasks.length + plannedTasks.importantNotUrgentTasks.length > 5) {
-      plannedTasks.importantNotUrgentTasks = plannedTasks.importantNotUrgentTasks.slice(0, 5 - plannedTasks.importantUrgentTasks.length);
+
+    // If we still haven't reached 5 tasks and there's space for more important & urgent tasks, add more.
+    slotsNeeded =
+      5 -
+      (plannedTasks.importantUrgentTasks.length +
+        plannedTasks.importantNotUrgentTasks.length);
+    if (
+      slotsNeeded > 0 &&
+      importantUrgentTodos.length > plannedTasks.importantUrgentTasks.length
+    ) {
+      const additionalUrgentTasks = pickRandomTasks(
+        importantUrgentTodos.filter(
+          (task) => !plannedTasks.importantUrgentTasks.includes(task)
+        ),
+        slotsNeeded
+      );
+      plannedTasks.importantUrgentTasks.push(...additionalUrgentTasks);
     }
-  
+
     return plannedTasks;
   };
 
   const handleHelpMePlan = () => {
     const plannedTasks = getPlannedTasks();
-    if (!plannedTasks) {
-      console.log("Add more important tasks to get help planning");
-    } else {
-      console.log(plannedTasks);
-    }
+    console.log(plannedTasks);
+    setPlannedTasks(plannedTasks);
+    setPlanTasks(true);
   };
 
   return (
@@ -100,6 +126,7 @@ const Base = () => {
           <p>help me plan</p>
         </div>
         <div id="base" className="container">
+          planTasks ? (<>{plannedTasks}</>) : (
           <div id="container-one">
             <Card
               identifier={'card-one'}
@@ -136,6 +163,7 @@ const Base = () => {
               priorityNumber="4"
             />
           </div>
+          )
         </div>
       </div>
     </motion.div>
