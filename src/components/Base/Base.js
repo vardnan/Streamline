@@ -84,10 +84,23 @@ const Base = () => {
   };
 
   const handleHelpMePlan = () => {
-    const plannedTasks = getPlannedTasks();
-    console.log(plannedTasks);
-    setPlannedTasks(plannedTasks);
-    setPlanTasks(true);
+    const tasks = getPlannedTasks();
+    if (typeof tasks === 'string') {
+      // If tasks is a string, it means we need to add more important tasks
+      alert(tasks); // You could use a more sophisticated way of displaying this message
+    } else {
+      setPlannedTasks(
+        tasks.importantUrgentTasks.concat(tasks.importantNotUrgentTasks)
+      );
+      setPlanTasks(true);
+    }
+  };
+
+  const renderPlannedTasks = () => {
+    return plannedTasks.map((task, index) => (
+      // Replace with your actual task card or element
+      <div key={index}>Task: {task.text}</div>
+    ));
   };
 
   return (
@@ -126,44 +139,48 @@ const Base = () => {
           <p>help me plan</p>
         </div>
         <div id="base" className="container">
-          planTasks ? (<>{plannedTasks}</>) : (
-          <div id="container-one">
-            <Card
-              identifier={'card-one'}
-              blockColor="#791616"
-              path="/todos"
-              priority="Important & urgent"
-              category="importantUrgent"
-              priorityNumber="1"
-            />
-            <Card
-              identifier={'card-four'}
-              blockColor="#486B7F"
-              path="/todos"
-              priority="Not important & urgent"
-              category="notImportantUrgent"
-              priorityNumber="3"
-            />
-          </div>
-          <div id="container-two">
-            <Card
-              identifier={'card-two'}
-              blockColor="#4D6A65"
-              path="/todos"
-              priority="Important & not urgent"
-              category="importantNotUrgent"
-              priorityNumber="2"
-            />
-            <Card
-              identifier={'card-three'}
-              blockColor="#767676"
-              path="/todos"
-              priority="Not important & not urgent"
-              category="notImportantNotUrgent"
-              priorityNumber="4"
-            />
-          </div>
-          )
+          {planTasks ? (
+            <div id="planned-tasks">{renderPlannedTasks()}</div>
+          ) : (
+            <>
+              <div id="container-one">
+                <Card
+                  identifier={'card-one'}
+                  blockColor="#791616"
+                  path="/todos"
+                  priority="Important & urgent"
+                  category="importantUrgent"
+                  priorityNumber="1"
+                />
+                <Card
+                  identifier={'card-four'}
+                  blockColor="#486B7F"
+                  path="/todos"
+                  priority="Not important & urgent"
+                  category="notImportantUrgent"
+                  priorityNumber="3"
+                />
+              </div>
+              <div id="container-two">
+                <Card
+                  identifier={'card-two'}
+                  blockColor="#4D6A65"
+                  path="/todos"
+                  priority="Important & not urgent"
+                  category="importantNotUrgent"
+                  priorityNumber="2"
+                />
+                <Card
+                  identifier={'card-three'}
+                  blockColor="#767676"
+                  path="/todos"
+                  priority="Not important & not urgent"
+                  category="notImportantNotUrgent"
+                  priorityNumber="4"
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </motion.div>
