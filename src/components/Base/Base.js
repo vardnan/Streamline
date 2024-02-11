@@ -97,9 +97,31 @@ const Base = () => {
   };
 
   const renderPlannedTasks = () => {
-    return plannedTasks.map((task, index) => (
+    return plannedTasks.map((todo, index) => (
       // Replace with your actual task card or element
-      <div key={index}>Task: {task.text}</div>
+      // <div key={index}>Task: {todo.text}</div>
+
+      <div key={index} className='todo-container'>
+        <div className='todo'>
+          <button
+            className="todo-button"
+            style={{
+              backgroundColor: 'white',
+              borderColor: 'black',
+            }}
+          >
+          </button>
+          <p
+            className="todo-text"
+            style={{
+              color: '#201B20',
+              opacity: 1,
+            }}
+          >
+            {todo.text}
+          </p>
+      </div>
+      </div>
     ));
   };
 
@@ -140,7 +162,7 @@ const Base = () => {
         </div>
         <div id="base" className="container">
           {planTasks ? (
-            <div id="planned-tasks">{renderPlannedTasks()}</div>
+            <div id="planned-tasks" style={{width: '100%'}}>{renderPlannedTasks()}</div>
           ) : (
             <>
               <div id="container-one">

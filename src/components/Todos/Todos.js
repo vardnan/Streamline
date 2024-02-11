@@ -37,7 +37,7 @@ const Todos = ({
 
   return (
     <motion.div
-      id="todos-container"
+      className="todos-container"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

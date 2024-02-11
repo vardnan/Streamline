@@ -1,4 +1,4 @@
-#todos-container {
+.todos-container {
     margin: 0;
     padding: 0;
     padding: 1.56rem;
@@ -12,7 +12,7 @@
     scrollbar-width: none; 
 }
 
-#todos-container::-webkit-scrollbar {
+.todos-container::-webkit-scrollbar {
     display: none; 
 }
 
