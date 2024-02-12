@@ -15,11 +15,17 @@
     gap: 0.75rem;
 }
 
+#action-button-active {
+    background-color: #333333;
+    color: #ffff;
+    justify-content: space-between;
+}
+
 .action-button {
     z-index: 1;
     order: 0;
     display: flex;
-    padding:  0.1rem 1.2rem 0.1rem 1.2rem;
+    padding: 0.1rem 1.2rem 0.1rem 1.2rem;
     justify-content: center;
     align-items: center;
     flex-direction: row;
@@ -28,14 +34,14 @@
     background: #F6F6F6;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(5px);
-    font-weight: 500;
+    font-weight: 550;
     color: #333333;
     width: 8rem;
-    transition: all .6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform .6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 #action-button-icon {
-    transition: all .6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform .6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .action-button:hover {
@@ -142,4 +148,28 @@
         justify-content: center;
     }
 
+}
+
+.plannedTodoDivider {
+    display: flex;
+    flex-direction: row;
+    padding: 0.875rem 2rem 0.875rem 2rem;
+    justify-content: space-between;
+    color: white;
+    border-radius: 25px;
+    align-content: center;
+    margin-bottom: 1rem;
+}
+
+.plannedTodoDivider p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+#plannedTasks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
 }

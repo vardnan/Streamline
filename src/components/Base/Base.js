@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import { cubicBezier, motion } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
+import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
 
 const Base = () => {
   const [plannedTasks, setPlannedTasks] = useState([]);
@@ -85,44 +86,47 @@ const Base = () => {
 
   const handleHelpMePlan = () => {
     const tasks = getPlannedTasks();
-    if (typeof tasks === 'string') {
-      // If tasks is a string, it means we need to add more important tasks
-      alert(tasks); // You could use a more sophisticated way of displaying this message
-    } else {
-      setPlannedTasks(
-        tasks.importantUrgentTasks.concat(tasks.importantNotUrgentTasks)
-      );
-      setPlanTasks(true);
-    }
+    setPlannedTasks(tasks);
+    setPlanTasks(true);
+    // if (typeof tasks === 'string') {
+    //   // // If tasks is a string, it means we need to add more important tasks
+    //   // alert(tasks); // You could use a more sophisticated way of displaying this message
+    // } else {
+    //   setPlannedTasks(
+    //     // tasks.importantUrgentTasks.concat(tasks.importantNotUrgentTasks)
+    //     tasks
+    //   );
+    //   setPlanTasks(true);
+    // }
   };
 
   const renderPlannedTasks = () => {
-    return plannedTasks.map((todo, index) => (
-      // Replace with your actual task card or element
-      // <div key={index}>Task: {todo.text}</div>
-
-      <div key={index} className='todo-container'>
-        <div className='todo'>
-          <button
-            className="todo-button"
-            style={{
-              backgroundColor: 'white',
-              borderColor: 'black',
-            }}
-          >
-          </button>
-          <p
-            className="todo-text"
-            style={{
-              color: '#201B20',
-              opacity: 1,
-            }}
-          >
-            {todo.text}
-          </p>
-      </div>
-      </div>
-    ));
+    if (typeof plannedTasks === 'string') {
+      return <p style={{fontSize: '1.5rem'}}>{plannedTasks}</p>;
+    } else {
+      return (
+        <div id="plannedTasks">
+          {plannedTasks.importantUrgentTasks.length >= 1 && (
+            <PlannedTaskContainer
+              priorityLevel="important & urgent"
+              priorityColour="#791616"
+              priorityCategory="importantUrgentTasks"
+              plannedTasks={plannedTasks}
+              priorityNumber={1}
+            />
+          )}
+          {plannedTasks.importantNotUrgentTasks.length >= 1 && (
+            <PlannedTaskContainer
+              priorityLevel="important & not urgent"
+              priorityColour="#4D6A65"
+              priorityCategory="importantNotUrgentTasks"
+              plannedTasks={plannedTasks}
+              priorityNumber={2}
+            />
+          )}
+        </div>
+      );
+    }
   };
 
   return (
@@ -133,36 +137,75 @@ const Base = () => {
       transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
     >
       <div id="holder">
-        <div className="action-button" onClick={handleHelpMePlan}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-          >
-            <g clip-path="url(#clip0_769_46)">
-              <path
-                d="M8.5 18C9.05 18 9.5 17.55 9.5 17V7C9.5 6.45 9.05 6 8.5 6C7.95 6 7.5 6.45 7.5 7V17C7.5 17.55 7.95 18 8.5 18ZM12.5 22C13.05 22 13.5 21.55 13.5 21V3C13.5 2.45 13.05 2 12.5 2C11.95 2 11.5 2.45 11.5 3V21C11.5 21.55 11.95 22 12.5 22ZM4.5 14C5.05 14 5.5 13.55 5.5 13V11C5.5 10.45 5.05 10 4.5 10C3.95 10 3.5 10.45 3.5 11V13C3.5 13.55 3.95 14 4.5 14ZM16.5 18C17.05 18 17.5 17.55 17.5 17V7C17.5 6.45 17.05 6 16.5 6C15.95 6 15.5 6.45 15.5 7V17C15.5 17.55 15.95 18 16.5 18ZM19.5 11V13C19.5 13.55 19.95 14 20.5 14C21.05 14 21.5 13.55 21.5 13V11C21.5 10.45 21.05 10 20.5 10C19.95 10 19.5 10.45 19.5 11Z"
-                fill="#333333"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_769_46">
-                <rect
-                  width="24"
-                  height="24"
+        <div
+          className="action-button"
+          id={planTasks && 'action-button-active'}
+          onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
+        >
+          {planTasks ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+            >
+              <g clip-path="url(#clip0_769_330)">
+                <path
+                  d="M19.5 11H8.32998L13.21 6.11997C13.6 5.72997 13.6 5.08997 13.21 4.69997C12.82 4.30997 12.19 4.30997 11.8 4.69997L5.20998 11.29C4.81998 11.68 4.81998 12.31 5.20998 12.7L11.8 19.29C12.19 19.68 12.82 19.68 13.21 19.29C13.6 18.9 13.6 18.27 13.21 17.88L8.32998 13H19.5C20.05 13 20.5 12.55 20.5 12C20.5 11.45 20.05 11 19.5 11Z"
                   fill="white"
-                  transform="translate(0.5)"
                 />
-              </clipPath>
-            </defs>
-          </svg>
-          <p>help me plan</p>
+              </g>
+              <defs>
+                <clipPath id="clip0_769_330">
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+            >
+              <g clip-path="url(#clip0_769_46)">
+                <path
+                  d="M8.5 18C9.05 18 9.5 17.55 9.5 17V7C9.5 6.45 9.05 6 8.5 6C7.95 6 7.5 6.45 7.5 7V17C7.5 17.55 7.95 18 8.5 18ZM12.5 22C13.05 22 13.5 21.55 13.5 21V3C13.5 2.45 13.05 2 12.5 2C11.95 2 11.5 2.45 11.5 3V21C11.5 21.55 11.95 22 12.5 22ZM4.5 14C5.05 14 5.5 13.55 5.5 13V11C5.5 10.45 5.05 10 4.5 10C3.95 10 3.5 10.45 3.5 11V13C3.5 13.55 3.95 14 4.5 14ZM16.5 18C17.05 18 17.5 17.55 17.5 17V7C17.5 6.45 17.05 6 16.5 6C15.95 6 15.5 6.45 15.5 7V17C15.5 17.55 15.95 18 16.5 18ZM19.5 11V13C19.5 13.55 19.95 14 20.5 14C21.05 14 21.5 13.55 21.5 13V11C21.5 10.45 21.05 10 20.5 10C19.95 10 19.5 10.45 19.5 11Z"
+                  fill="#333333"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_769_46">
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          )}
+          <p>{planTasks ? 'go back' : 'help me plan'}</p>
         </div>
         <div id="base" className="container">
           {planTasks ? (
-            <div id="planned-tasks" style={{width: '100%'}}>{renderPlannedTasks()}</div>
+            <div
+              style={{
+                width: '100%',
+                paddingLeft: '2rem',
+                paddingRight: '2rem',
+              }}
+            >
+              {renderPlannedTasks()}
+            </div>
           ) : (
             <>
               <div id="container-one">
