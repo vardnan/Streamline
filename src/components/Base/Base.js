@@ -136,7 +136,7 @@ const Base = () => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
     >
-      <motion.div id="holder" layout transition={{duration: 0.4, type: cubicBezier(0.25, 1, 0.5, 1)}}>
+      <motion.div id="holder" layout transition={{duration: 0.35, type: cubicBezier(0.25, 1, 0.5, 1)}}>
         <div
           className="action-button"
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
