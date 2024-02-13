@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { cubicBezier, motion } from 'framer-motion';
+import { cubicBezier, motion, LayoutGroup, easeIn } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
 import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
@@ -102,10 +102,10 @@ const Base = () => {
 
   const renderPlannedTasks = () => {
     if (typeof plannedTasks === 'string') {
-      return <p style={{fontSize: '1.5rem'}}>{plannedTasks}</p>;
+      return <p style={{ fontSize: '1.5rem' }}>{plannedTasks}</p>;
     } else {
       return (
-        <div id="plannedTasks">
+        <motion.div id="plannedTasks" layoutId="plannedTasks">
           {plannedTasks.importantUrgentTasks.length >= 1 && (
             <PlannedTaskContainer
               priorityLevel="important & urgent"
@@ -124,7 +124,7 @@ const Base = () => {
               priorityNumber={2}
             />
           )}
-        </div>
+        </motion.div>
       );
     }
   };
@@ -136,10 +136,9 @@ const Base = () => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
     >
-      <div id="holder">
+      <motion.div id="holder" layout transition={{duration: 0.4, type: cubicBezier(0.25, 1, 0.5, 1)}}>
         <div
           className="action-button"
-          id={planTasks && 'action-button-active'}
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
         >
           {planTasks ? (
@@ -153,7 +152,7 @@ const Base = () => {
               <g clip-path="url(#clip0_769_330)">
                 <path
                   d="M19.5 11H8.32998L13.21 6.11997C13.6 5.72997 13.6 5.08997 13.21 4.69997C12.82 4.30997 12.19 4.30997 11.8 4.69997L5.20998 11.29C4.81998 11.68 4.81998 12.31 5.20998 12.7L11.8 19.29C12.19 19.68 12.82 19.68 13.21 19.29C13.6 18.9 13.6 18.27 13.21 17.88L8.32998 13H19.5C20.05 13 20.5 12.55 20.5 12C20.5 11.45 20.05 11 19.5 11Z"
-                  fill="white"
+                  fill="#333333"
                 />
               </g>
               <defs>
@@ -195,7 +194,7 @@ const Base = () => {
           )}
           <p>{planTasks ? 'go back' : 'help me plan'}</p>
         </div>
-        <div id="base" className="container">
+        <motion.div id="base" className="container">
           {planTasks ? (
             <div
               style={{
@@ -208,46 +207,66 @@ const Base = () => {
             </div>
           ) : (
             <>
-              <div id="container-one">
-                <Card
-                  identifier={'card-one'}
-                  blockColor="#791616"
-                  path="/todos"
-                  priority="Important & urgent"
-                  category="importantUrgent"
-                  priorityNumber="1"
-                />
-                <Card
-                  identifier={'card-four'}
-                  blockColor="#486B7F"
-                  path="/todos"
-                  priority="Not important & urgent"
-                  category="notImportantUrgent"
-                  priorityNumber="3"
-                />
-              </div>
-              <div id="container-two">
-                <Card
-                  identifier={'card-two'}
-                  blockColor="#4D6A65"
-                  path="/todos"
-                  priority="Important & not urgent"
-                  category="importantNotUrgent"
-                  priorityNumber="2"
-                />
-                <Card
-                  identifier={'card-three'}
-                  blockColor="#767676"
-                  path="/todos"
-                  priority="Not important & not urgent"
-                  category="notImportantNotUrgent"
-                  priorityNumber="4"
-                />
-              </div>
+              <LayoutGroup layoutId="cards">
+                <motion.div
+                  id="container-one"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.3,
+                    type: cubicBezier(0.25, 1, 0.5, 1),
+                    delay: 0.15,
+                  }}
+                >
+                  <Card
+                    identifier={'card-one'}
+                    blockColor="#791616"
+                    path="/todos"
+                    priority="Important & urgent"
+                    category="importantUrgent"
+                    priorityNumber="1"
+                  />
+                  <Card
+                    identifier={'card-four'}
+                    blockColor="#486B7F"
+                    path="/todos"
+                    priority="Not important & urgent"
+                    category="notImportantUrgent"
+                    priorityNumber="3"
+                  />
+                </motion.div>
+                <motion.div
+                  id="container-two"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.3,
+                    type: cubicBezier(0.25, 1, 0.5, 1),
+                    delay: 0.15,
+                  }}
+                >
+                  <Card
+                    identifier={'card-two'}
+                    blockColor="#4D6A65"
+                    path="/todos"
+                    priority="Important & not urgent"
+                    category="importantNotUrgent"
+                    priorityNumber="2"
+                  />
+                  <Card
+                    identifier={'card-three'}
+                    blockColor="#767676"
+                    path="/todos"
+                    priority="Not important & not urgent"
+                    category="notImportantNotUrgent"
+                    priorityNumber="4"
+                  />
+                </motion.div>
+              </LayoutGroup>
             </>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 };
