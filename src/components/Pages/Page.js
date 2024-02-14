@@ -62,7 +62,7 @@ const Page = () => {
       clearTimeout(timeoutRefs.current[todoId]);
     }
 
-    let countdown = 3;
+    let countdown = 2;
     setCountdowns((prev) => ({ ...prev, [todoId]: countdown }));
     const intervalId = setInterval(() => {
       countdown -= 1;
