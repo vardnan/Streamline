@@ -200,7 +200,7 @@ const Base = () => {
               style={{
                 width: '100%',
                 paddingLeft: '2rem',
-                paddingRight: '2rem',
+                paddingRight: '2rem'
               }}
             >
               {renderPlannedTasks()}
