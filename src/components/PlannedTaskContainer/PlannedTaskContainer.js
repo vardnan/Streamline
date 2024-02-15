@@ -51,11 +51,9 @@ const PlannedTaskContainer = ({
       >
         <p>{priorityLevel}</p>
         <div
-          className="priorityNumber"
+          className="plannedPriorityNumber"
           style={{
-            position: 'relative',
             color: priorityColour,
-            backgroundColor: 'white',
           }}
         >
           {priorityNumber}
