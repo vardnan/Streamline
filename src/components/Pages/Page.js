@@ -210,7 +210,7 @@ const Page = () => {
               transition: { duration: 0.1, delay: 0 },
             }}
           >
-            Streamline
+            dieter
           </motion.button>
         </Link>
         <motion.div
