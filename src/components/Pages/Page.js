@@ -32,6 +32,14 @@ const Page = () => {
   const [editingText, setEditingText] = useState('');
   const [countdowns, setCountdowns] = useState({});
   const timeoutRefs = useRef({});
+  const currentCategoryRef = useRef(currentCategory);
+  const lastEnterTimeRef = useRef(null);
+
+  // Update the ref whenever the currentCategory changes
+  useEffect(() => {
+    currentCategoryRef.current = currentCategory;
+  }, [currentCategory]);
+
 
   // useEffect to update localStorage when todos change
   useEffect(() => {
@@ -57,12 +65,38 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        const now = Date.now();
+        const timeSinceLastEnter = now - (lastEnterTimeRef.current || 0);
+
+        // If the time since the last Enter key press is less than 500 milliseconds
+        if (timeSinceLastEnter < 400) {
+          // Consider this a double click
+          addTodo();
+        }
+
+        // Update the last Enter time
+        lastEnterTimeRef.current = now;
+      }
+    };
+
+    // Attach the event listener to the window object.
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Return a cleanup function to remove the event listener.
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const initiateCountdown = (todoId) => {
     if (timeoutRefs.current[todoId]) {
       clearTimeout(timeoutRefs.current[todoId]);
     }
 
-    let countdown = 3;
+    let countdown = 2;
     setCountdowns((prev) => ({ ...prev, [todoId]: countdown }));
     const intervalId = setInterval(() => {
       countdown -= 1;
@@ -105,7 +139,6 @@ const Page = () => {
     });
   };
 
-  // Add a new todo to the current category
   const addTodo = () => {
     const newTodo = {
       isChecked: false,
@@ -113,14 +146,16 @@ const Page = () => {
       text: 'New thing to do',
       isCountingDown: false,
     };
-
-    const updatedTodos = {
-      ...todos,
-      [currentCategory]: [newTodo, ...todos[currentCategory]],
-    };
-
-    setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  
+    setTodos((prevTodos) => {
+      const updatedTodos = {
+        ...prevTodos,
+        [currentCategoryRef.current]: [newTodo, ...prevTodos[currentCategoryRef.current]],
+      };
+      // Asynchronously update localStorage
+      localStorage.setItem('todos', JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
   };
 
   const handleOnDragEnd = (result) => {

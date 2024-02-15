@@ -124,6 +124,8 @@
     top: 0.8rem; /* Adjust as necessary for your layout */
     right: 0.8rem; /* Adjust as necessary for your layout */
     z-index: 1;
+    min-width: 2.625rem; /* Size of the circle */
+    min-height: 2.625rem; /* Size of the circle */
     width: 2.625rem; /* Size of the circle */
     height: 2.625rem; /* Size of the circle */
     font-size: 1.25rem;
