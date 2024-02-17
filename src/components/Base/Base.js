@@ -153,7 +153,14 @@ const Base = () => {
       >
         dieter
       </motion.div>
-      <motion.div id="holder" layout>
+      <motion.div
+        id="holder"
+        layout
+        transition={{
+          duration: 0.35,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+        }}
+      >
         <motion.div
           className="action-button"
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
@@ -211,14 +218,7 @@ const Base = () => {
           )}
           <p>{planTasks ? 'go back' : 'help me plan'}</p>
         </motion.div>
-        <motion.div
-          id="base"
-          className="container"
-          transition={{
-            duration: 0.6,
-            type: cubicBezier(0.25, 1, 0.5, 1),
-          }}
-        >
+        <motion.div id="base" className="container">
           {planTasks ? (
             <div
               style={{
