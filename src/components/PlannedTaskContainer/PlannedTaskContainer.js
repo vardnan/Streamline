@@ -74,10 +74,10 @@ const PlannedTaskContainer = ({
                 className="todo-button"
                 style={{
                   backgroundColor: priorityColour,
-                  width: '1rem',
-                  height: '1rem',
+                  width: '16px',
+                  height: '16px',
                   borderColor: priorityColour,
-                  borderRadius: '50%',
+                  borderRadius: '100%',
                 }}
               ></button>
               <p className="todo-text">{todo.text}</p>
