@@ -130,14 +130,31 @@ const Base = () => {
   };
 
   return (
-    <motion.div
-      id="parent"
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
-    >
-      <motion.div id="holder" layout transition={{duration: 0.35, type: cubicBezier(0.25, 1, 0.5, 1)}}>
-        <div
+    <motion.div id="parent">
+      <motion.div
+        className="background"
+        initial={{ opacity: 1, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.6,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.2,
+        }}
+      ></motion.div>
+      <motion.div
+        className="background-logo"
+        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.8,
+        }}
+      >
+        dieter
+      </motion.div>
+      <motion.div id="holder" layout>
+        <motion.div
           className="action-button"
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
         >
@@ -193,14 +210,21 @@ const Base = () => {
             </svg>
           )}
           <p>{planTasks ? 'go back' : 'help me plan'}</p>
-        </div>
-        <motion.div id="base" className="container">
+        </motion.div>
+        <motion.div
+          id="base"
+          className="container"
+          transition={{
+            duration: 0.6,
+            type: cubicBezier(0.25, 1, 0.5, 1),
+          }}
+        >
           {planTasks ? (
             <div
               style={{
                 boxSizing: 'border-box',
                 width: '100%',
-                padding: '0rem 2rem 0rem 2rem' 
+                padding: '0rem 2rem 0rem 2rem',
               }}
             >
               {renderPlannedTasks()}
@@ -208,16 +232,7 @@ const Base = () => {
           ) : (
             <>
               <LayoutGroup layoutId="cards">
-                <motion.div
-                  id="container-one"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    type: cubicBezier(0.25, 1, 0.5, 1),
-                    delay: 0.15,
-                  }}
-                >
+                <motion.div id="container-one">
                   <Card
                     identifier={'card-one'}
                     blockColor="#791616"
@@ -225,6 +240,7 @@ const Base = () => {
                     priority="Important & urgent"
                     category="importantUrgent"
                     priorityNumber="1"
+                    animationDelay={0.5}
                   />
                   <Card
                     identifier={'card-four'}
@@ -233,18 +249,10 @@ const Base = () => {
                     priority="Not important & urgent"
                     category="notImportantUrgent"
                     priorityNumber="3"
+                    animationDelay={1}
                   />
                 </motion.div>
-                <motion.div
-                  id="container-two"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    type: cubicBezier(0.25, 1, 0.5, 1),
-                    delay: 0.15,
-                  }}
-                >
+                <motion.div id="container-two">
                   <Card
                     identifier={'card-two'}
                     blockColor="#4D6A65"
@@ -252,6 +260,7 @@ const Base = () => {
                     priority="Important & not urgent"
                     category="importantNotUrgent"
                     priorityNumber="2"
+                    animationDelay={0.7}
                   />
                   <Card
                     identifier={'card-three'}
@@ -260,6 +269,7 @@ const Base = () => {
                     priority="Not important & not urgent"
                     category="notImportantNotUrgent"
                     priorityNumber="4"
+                    animationDelay={1.2}
                   />
                 </motion.div>
               </LayoutGroup>
