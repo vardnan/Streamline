@@ -102,7 +102,26 @@ const Base = () => {
 
   const renderPlannedTasks = () => {
     if (typeof plannedTasks === 'string') {
-      return <p style={{ fontSize: '1.5rem' }}>{plannedTasks}</p>;
+      return (
+        <div id="noPlannedTasks">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="38"
+            height="38"
+            viewBox="0 0 38 38"
+            fill="none"
+          >
+            <path
+              d="M18.9841 3.16675C10.2441 3.16675 3.16663 10.2601 3.16663 19.0001C3.16663 27.7401 10.2441 34.8334 18.9841 34.8334C27.74 34.8334 34.8333 27.7401 34.8333 19.0001C34.8333 10.2601 27.74 3.16675 18.9841 3.16675ZM19 31.6667C12.0016 31.6667 6.33329 25.9984 6.33329 19.0001C6.33329 12.0017 12.0016 6.33341 19 6.33341C25.9983 6.33341 31.6666 12.0017 31.6666 19.0001C31.6666 25.9984 25.9983 31.6667 19 31.6667ZM17.4166 23.7501H20.5833V26.9167H17.4166V23.7501ZM17.4166 11.0834H20.5833V20.5834H17.4166V11.0834Z"
+              fill="#333333"
+            />
+          </svg>
+          <p id="noPlannedTasksText">
+            add more <span style={{ fontWeight: 600 }}>important tasks</span> to
+            get help planning
+          </p>
+        </div>
+      );
     } else {
       return (
         <motion.div id="plannedTasks" layoutId="plannedTasks">
@@ -113,6 +132,7 @@ const Base = () => {
               priorityCategory="importantUrgentTasks"
               plannedTasks={plannedTasks}
               priorityNumber={1}
+              animationDelay={0.3}
             />
           )}
           {plannedTasks.importantNotUrgentTasks.length >= 1 && (
@@ -122,6 +142,7 @@ const Base = () => {
               priorityCategory="importantNotUrgentTasks"
               plannedTasks={plannedTasks}
               priorityNumber={2}
+              animationDelay={0.5}
             />
           )}
         </motion.div>
@@ -130,14 +151,38 @@ const Base = () => {
   };
 
   return (
-    <motion.div
-      id="parent"
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
-    >
-      <motion.div id="holder" layout transition={{duration: 0.35, type: cubicBezier(0.25, 1, 0.5, 1)}}>
-        <div
+    <motion.div id="parent">
+      <motion.div
+        className="background"
+        initial={{ opacity: 1, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.6,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.2,
+        }}
+      ></motion.div>
+      <motion.div
+        className="background-logo"
+        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.8,
+        }}
+      >
+        dieter
+      </motion.div>
+      <motion.div
+        id="holder"
+        layout
+        transition={{
+          duration: 0.35,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+        }}
+      >
+        <motion.div
           className="action-button"
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
         >
@@ -193,14 +238,14 @@ const Base = () => {
             </svg>
           )}
           <p>{planTasks ? 'go back' : 'help me plan'}</p>
-        </div>
+        </motion.div>
         <motion.div id="base" className="container">
           {planTasks ? (
             <div
               style={{
                 boxSizing: 'border-box',
                 width: '100%',
-                padding: '0rem 2rem 0rem 2rem' 
+                padding: '0rem 2rem 0rem 2rem',
               }}
             >
               {renderPlannedTasks()}
@@ -208,16 +253,7 @@ const Base = () => {
           ) : (
             <>
               <LayoutGroup layoutId="cards">
-                <motion.div
-                  id="container-one"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    type: cubicBezier(0.25, 1, 0.5, 1),
-                    delay: 0.15,
-                  }}
-                >
+                <motion.div id="container-one">
                   <Card
                     identifier={'card-one'}
                     blockColor="#791616"
@@ -225,6 +261,7 @@ const Base = () => {
                     priority="Important & urgent"
                     category="importantUrgent"
                     priorityNumber="1"
+                    animationDelay={0.4}
                   />
                   <Card
                     identifier={'card-four'}
@@ -233,18 +270,10 @@ const Base = () => {
                     priority="Not important & urgent"
                     category="notImportantUrgent"
                     priorityNumber="3"
+                    animationDelay={0.8}
                   />
                 </motion.div>
-                <motion.div
-                  id="container-two"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    type: cubicBezier(0.25, 1, 0.5, 1),
-                    delay: 0.15,
-                  }}
-                >
+                <motion.div id="container-two">
                   <Card
                     identifier={'card-two'}
                     blockColor="#4D6A65"
@@ -252,6 +281,7 @@ const Base = () => {
                     priority="Important & not urgent"
                     category="importantNotUrgent"
                     priorityNumber="2"
+                    animationDelay={0.6}
                   />
                   <Card
                     identifier={'card-three'}
@@ -260,6 +290,7 @@ const Base = () => {
                     priority="Not important & not urgent"
                     category="notImportantNotUrgent"
                     priorityNumber="4"
+                    animationDelay={1}
                   />
                 </motion.div>
               </LayoutGroup>

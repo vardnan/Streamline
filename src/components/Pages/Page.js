@@ -7,6 +7,7 @@ import {
   AnimatePresence,
   easeInOut,
   easeIn,
+  easeOut,
 } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
@@ -39,7 +40,6 @@ const Page = () => {
   useEffect(() => {
     currentCategoryRef.current = currentCategory;
   }, [currentCategory]);
-
 
   // useEffect to update localStorage when todos change
   useEffect(() => {
@@ -146,11 +146,14 @@ const Page = () => {
       text: 'New thing to do',
       isCountingDown: false,
     };
-  
+
     setTodos((prevTodos) => {
       const updatedTodos = {
         ...prevTodos,
-        [currentCategoryRef.current]: [newTodo, ...prevTodos[currentCategoryRef.current]],
+        [currentCategoryRef.current]: [
+          newTodo,
+          ...prevTodos[currentCategoryRef.current],
+        ],
       };
       // Asynchronously update localStorage
       localStorage.setItem('todos', JSON.stringify(updatedTodos));
@@ -196,18 +199,48 @@ const Page = () => {
     setEditingId(null);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
+
+  const boxShadowArray = {
+    'importantUrgent' : '-10px 10px 100px rgba(121, 22, 22, 0.14)',
+    'importantNotUrgent' : '-10px 10px 100px rgba(22, 117, 100, 0.17)',
+    'notImportantUrgent' : '-10px 10px 100px rgba(17, 87, 128, 0.17)',
+    'notImportantNotUrgent' : '-10px 10px 100px rgba(75, 75, 75, 0.17)',
+  }
+    
   return (
     <motion.div id="page-container">
+      <motion.div
+        className="page-background"
+        initial={{ scale: 0.5 }}
+        animate={{ scale: 1 }}
+        transition={{
+          duration: 0.6,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.2,
+        }}
+      ></motion.div>
+      <motion.div
+        className="page-background-logo"
+        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          type: cubicBezier(0.25, 1, 0.5, 1),
+          delay: 0.9,
+        }}
+      >
+        dieter
+      </motion.div>
       <div style={{ boxSizing: 'border-box' }}>
         <Link id="streamline-logo" to={'/'}>
           <motion.button
             id="streamline-button"
-            initial={{ opacity: 0, y: 3 }}
+            initial={{ opacity: 0, y: 11 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6, type: easeIn }}
+            transition={{ duration: 0.65, delay: 0.8, type: cubicBezier(0.25, 1, 0.5, 1) }}
             whileHover={{
-              scale: 1.06,
-              transition: { duration: 0.1, delay: 0 },
+              scale: 1.07,
+              transition: { duration: 0.1 },
             }}
           >
             dieter
@@ -215,9 +248,10 @@ const Page = () => {
         </Link>
         <motion.div
           className="page"
-          initial={{ opacity: 0, scale: 0.6 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, type: cubicBezier(0.25, 1, 0.5, 1) }}
+          transition={{ duration: 0.8, type: cubicBezier(0.25, 1, 0.5, 1), delay: 0.3 }}
+          style={{boxShadow: boxShadowArray[currentCategory]}}
         >
           <div className="page-color-block" style={{ backgroundColor: color }}>
             <AnimatePresence mode="wait">

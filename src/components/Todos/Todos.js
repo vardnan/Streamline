@@ -86,7 +86,7 @@ const Todos = ({
                               style={{
                                 backgroundColor: todo.isChecked
                                   ? checkedColor
-                                  : '#FFF',
+                                  : 'rgba(255, 255, 255, 0.60)',
                                 borderColor: checkedColor,
                               }}
                               onClick={() => checkTodo(todo.id)}

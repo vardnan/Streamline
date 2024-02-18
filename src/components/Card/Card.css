@@ -13,17 +13,17 @@
 .card {
     width: clamp(290px, 40vw, 310px);
     border-radius: 1.56rem;
-    background: #FFF;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     position: relative;
     transition: all .6s cubic-bezier(0.25, 1, 0.5, 1);
     padding: 0;
     overflow: hidden;
     border: 0;
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(15px);
 }
 
 .card:hover {
-    transform: scale(1.025);
     cursor: pointer;
 }
 
@@ -93,12 +93,14 @@
     order: 1;
     /* height: 385px; */
     height: 24rem;
+    filter: drop-shadow(-10px 10px 100px rgba(121, 22, 22, 0.25));
 }
 
 #card-three {
     order: 2;
     /* height: 175px; */
     height: 11rem;
+    filter: drop-shadow(-10px 10px 100px rgba(75, 75, 75, 0.28));
 
 }
 
@@ -106,12 +108,14 @@
     order: 1;
     /* height: 324px; */
     height: 20.25rem;
+    filter: drop-shadow(-10px 10px 100px rgba(22, 117, 100, 0.28));
 }
 
 #card-four {
     order: 2;
     /* height: 200px; */
     height: 12.5rem;
+    filter: drop-shadow(-10px 10px 100px rgba(17, 87, 128, 0.28));
 }
 
 .priorityNumber {
@@ -131,4 +135,39 @@
     font-size: 1.25rem;
     font-weight: 600; /* Adjust the font size as necessary */
     color: #000; /* Change the text color as needed */
+}
+
+@media only screen and (min-width: 820px) {
+    .container {
+        /* Remove any flexbox settings that conflict with absolute positioning */
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    /* Specific positioning for each card */
+    #card-one {
+        transform: rotate(-2.988deg);
+        z-index: 7;
+    }
+
+    #card-two {
+        transform: rotate(4.769deg);
+        z-index: 8;
+    }
+
+    #card-four {
+        left: -20%;
+        transform: rotate(-5.181deg);
+        z-index: 9;
+    }
+
+    #card-three {
+        left: -25%;
+        transform: rotate(-8.951deg);
+        z-index: 10;
+    }
 }
