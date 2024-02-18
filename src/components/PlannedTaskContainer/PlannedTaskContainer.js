@@ -8,34 +8,16 @@ const PlannedTaskContainer = ({
   priorityCategory,
   plannedTasks,
   priorityNumber,
+  animationDelay,
 }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15, // Stagger the animation of children
-      },
-    },
-  };
-
-  // Item variants
-  const itemVariants = {
-    hidden: { y: 3, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring' },
-    },
-  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: -15}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.3,
-        type: cubicBezier(0.25, 1, 0.5, 1),
+        duration: 0.6,
+        type: cubicBezier(0.25, 1, 0.5, 1), delay: animationDelay
       }}
     >
       <p style={{ fontSize: '1.5rem', margin: '0 0 1.2rem 0' }}>
@@ -62,18 +44,16 @@ const PlannedTaskContainer = ({
       <motion.div
         className="todo-container"
         style={{ paddingLeft: '2rem' }}
-        variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         {plannedTasks[priorityCategory].map((todo, index) => (
-          <motion.div key={index} variants={itemVariants}>
+          <motion.div key={index}>
             <div className="todo">
               <button
                 type="button"
                 className="todo-button"
                 style={{
-                  backgroundColor: 'white',
                   borderColor: priorityColour,
 
                 }}

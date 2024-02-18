@@ -93,12 +93,14 @@
     order: 1;
     /* height: 385px; */
     height: 24rem;
+    filter: drop-shadow(-10px 10px 100px rgba(121, 22, 22, 0.25));
 }
 
 #card-three {
     order: 2;
     /* height: 175px; */
     height: 11rem;
+    filter: drop-shadow(-10px 10px 100px rgba(75, 75, 75, 0.28));
 
 }
 
@@ -106,12 +108,14 @@
     order: 1;
     /* height: 324px; */
     height: 20.25rem;
+    filter: drop-shadow(-10px 10px 100px rgba(22, 117, 100, 0.28));
 }
 
 #card-four {
     order: 2;
     /* height: 200px; */
     height: 12.5rem;
+    filter: drop-shadow(-10px 10px 100px rgba(17, 87, 128, 0.28));
 }
 
 .priorityNumber {
@@ -133,7 +137,7 @@
     color: #000; /* Change the text color as needed */
 }
 
-@media (min-width: 1024px) {
+@media only screen and (min-width: 820px) {
     .container {
         /* Remove any flexbox settings that conflict with absolute positioning */
         justify-content: flex-start;
@@ -147,27 +151,23 @@
     /* Specific positioning for each card */
     #card-one {
         transform: rotate(-2.988deg);
-        filter: drop-shadow(-10px 10px 100px rgba(121, 22, 22, 0.25));
         z-index: 7;
     }
 
     #card-two {
         transform: rotate(4.769deg);
-        filter: drop-shadow(-10px 10px 100px rgba(22, 117, 100, 0.28));
         z-index: 8;
     }
 
     #card-four {
         left: -20%;
         transform: rotate(-5.181deg);
-        filter: drop-shadow(-10px 10px 100px rgba(17, 87, 128, 0.28));
         z-index: 9;
     }
 
     #card-three {
         left: -25%;
         transform: rotate(-8.951deg);
-        filter: drop-shadow(-10px 10px 100px rgba(75, 75, 75, 0.28));
         z-index: 10;
     }
 }

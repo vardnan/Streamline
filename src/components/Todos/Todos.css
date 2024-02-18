@@ -31,7 +31,7 @@
 }
 
 .todo:hover {
-    background: #f1f1f1;
+    background: rgba(181, 181, 181, 0.1);
     border-radius: 0.625rem;
 }
 
@@ -43,7 +43,7 @@
     height: 1.56rem;
     border-radius: 0.1875rem;
     border: 0.0625rem solid;
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.60);
     transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 

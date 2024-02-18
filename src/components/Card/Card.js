@@ -1,6 +1,6 @@
 import { React } from 'react';
 import { Link } from 'react-router-dom';
-import { cubicBezier, motion, LayoutGroup, easeIn } from 'framer-motion';
+import { cubicBezier, motion } from 'framer-motion';
 import './Card.css';
 
 const Card = ({
@@ -32,7 +32,7 @@ const Card = ({
           type: cubicBezier(0.25, 1, 0.5, 1),
           delay: animationDelay,
         }}
-        whileHover={{scale: 1.025, transition: 0.35, type: cubicBezier(0.25, 1, 0.5, 1)}}
+        whileHover={{scale: 1.035, transition: 0.1, type: cubicBezier(0.25, 1, 0.5, 1)}}
       >
         <div>
           <p

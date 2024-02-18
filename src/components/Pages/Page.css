@@ -4,6 +4,8 @@
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 
 .page {
@@ -16,15 +18,39 @@
     /* height: 46.75rem; */
     height: 80vh;
     border-radius: 1.56rem;
-    background: #F6F6F6;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(5px);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 1rem;
+    margin-top: 0.85rem;
+    /* background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px); */
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: -10px 10px 100px 0px rgba(206, 206, 206, 0.25);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.page-background {
+    z-index: -2;
+    width: 976px;
+    height: 922px;
+    border-radius: 100%;
+    background: #CECECE;
+    filter: blur(200px);
+    position: absolute;
+}
+
+.page-background-logo {
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 400px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    text-transform: lowercase;
+    position: absolute;
+    top: 0;
+    z-index: -1;
 }
 
 .page-color-block {
@@ -48,7 +74,7 @@
     background-color: transparent;
     border: none;
     color: #C0C0C0;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
