@@ -1,5 +1,12 @@
 import { React, useState } from 'react';
-import { cubicBezier, motion, LayoutGroup, easeIn } from 'framer-motion';
+import {
+  cubicBezier,
+  motion,
+  LayoutGroup,
+  useAnimationControls,
+  easeInOut,
+  easeIn,
+} from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
 import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
@@ -7,6 +14,85 @@ import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
 const Base = () => {
   const [plannedTasks, setPlannedTasks] = useState([]);
   const [planTasks, setPlanTasks] = useState(false);
+  const controls = useAnimationControls();
+  const eqControls = useAnimationControls();
+
+
+  const initialVariant = {
+    x: 0,
+    transition: {
+      duration: 0.76,
+      ease: "easeOut"
+    }
+  };
+
+  const eqInitialVariant = {
+    scaleY: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  };
+
+  const variants1 = {
+    animate: {
+      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+        repeat: Infinity,
+      },
+    },
+  };
+
+
+  const variants2 = {
+    animate: {
+      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+        repeat: Infinity,
+        delay: 0.3
+      },
+    },
+  };
+
+  const variants3 = {
+    animate: {
+      scaleY: [1, 1.2, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+        repeat: Infinity,
+        delay: 0.6
+      },
+    },
+  };
+
+  const variants4 = {
+    animate: {
+      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+        repeat: Infinity,
+        delay: 0.9
+      },
+    },
+  };
+
+  const variants5 = {
+    animate: {
+      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+        repeat: Infinity,
+        delay: 1.2
+      },
+    },
+  };
 
   const getAllTodos = () => {
     const todos = JSON.parse(localStorage.getItem('todos')) || {};
@@ -88,16 +174,6 @@ const Base = () => {
     const tasks = getPlannedTasks();
     setPlannedTasks(tasks);
     setPlanTasks(true);
-    // if (typeof tasks === 'string') {
-    //   // // If tasks is a string, it means we need to add more important tasks
-    //   // alert(tasks); // You could use a more sophisticated way of displaying this message
-    // } else {
-    //   setPlannedTasks(
-    //     // tasks.importantUrgentTasks.concat(tasks.importantNotUrgentTasks)
-    //     tasks
-    //   );
-    //   setPlanTasks(true);
-    // }
   };
 
   const renderPlannedTasks = () => {
@@ -185,21 +261,34 @@ const Base = () => {
         <motion.div
           className="action-button"
           onClick={planTasks ? () => setPlanTasks(false) : handleHelpMePlan}
+          onHoverStart={() =>
+            planTasks
+              ? controls.start({
+                  x: [0, 1.5, 0],
+                  transition: {
+                    repeat: Infinity,
+                    type: easeInOut,
+                    duration: 0.75,
+                  },
+                })
+              : eqControls.start('animate')
+          }
+          onHoverEnd={() => planTasks ? controls.start(initialVariant) : eqControls.start(eqInitialVariant)}
         >
           {planTasks ? (
-            <svg
+            <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
               height="24"
               viewBox="0 0 25 24"
               fill="none"
             >
-              <g clipPath="url(#clip0_769_330)">
+              <motion.g clipPath="url(#clip0_769_330)" animate={controls}>
                 <path
                   d="M19.5 11H8.32998L13.21 6.11997C13.6 5.72997 13.6 5.08997 13.21 4.69997C12.82 4.30997 12.19 4.30997 11.8 4.69997L5.20998 11.29C4.81998 11.68 4.81998 12.31 5.20998 12.7L11.8 19.29C12.19 19.68 12.82 19.68 13.21 19.29C13.6 18.9 13.6 18.27 13.21 17.88L8.32998 13H19.5C20.05 13 20.5 12.55 20.5 12C20.5 11.45 20.05 11 19.5 11Z"
                   fill="#333333"
                 />
-              </g>
+              </motion.g>
               <defs>
                 <clipPath id="clip0_769_330">
                   <rect
@@ -210,32 +299,53 @@ const Base = () => {
                   />
                 </clipPath>
               </defs>
-            </svg>
+            </motion.svg>
           ) : (
-            <svg
+            <motion.svg
               xmlns="http://www.w3.org/2000/svg"
-              width="25"
+              width="24"
               height="24"
-              viewBox="0 0 25 24"
+              viewBox="0 0 24 24"
               fill="none"
             >
-              <g clipPath="url(#clip0_769_46)">
-                <path
-                  d="M8.5 18C9.05 18 9.5 17.55 9.5 17V7C9.5 6.45 9.05 6 8.5 6C7.95 6 7.5 6.45 7.5 7V17C7.5 17.55 7.95 18 8.5 18ZM12.5 22C13.05 22 13.5 21.55 13.5 21V3C13.5 2.45 13.05 2 12.5 2C11.95 2 11.5 2.45 11.5 3V21C11.5 21.55 11.95 22 12.5 22ZM4.5 14C5.05 14 5.5 13.55 5.5 13V11C5.5 10.45 5.05 10 4.5 10C3.95 10 3.5 10.45 3.5 11V13C3.5 13.55 3.95 14 4.5 14ZM16.5 18C17.05 18 17.5 17.55 17.5 17V7C17.5 6.45 17.05 6 16.5 6C15.95 6 15.5 6.45 15.5 7V17C15.5 17.55 15.95 18 16.5 18ZM19.5 11V13C19.5 13.55 19.95 14 20.5 14C21.05 14 21.5 13.55 21.5 13V11C21.5 10.45 21.05 10 20.5 10C19.95 10 19.5 10.45 19.5 11Z"
+              <g clip-path="url(#clip0_872_83)">
+                <motion.path
+                  d="M8 18C8.55 18 9 17.55 9 17V7C9 6.45 8.55 6 8 6C7.45 6 7 6.45 7 7V17C7 17.55 7.45 18 8 18ZM8 18C8.55 18 9 17.55 9 17V7C9 6.45 8.55 6 8 6C7.45 6 7 6.45 7 7V17C7 17.55 7.45 18 8 18ZM8 18C8.55 18 9 17.55 9 17V7C9 6.45 8.55 6 8 6C7.45 6 7 6.45 7 7V17C7 17.55 7.45 18 8 18ZM8 18C8.55 18 9 17.55 9 17V7C9 6.45 8.55 6 8 6C7.45 6 7 6.45 7 7V17C7 17.55 7.45 18 8 18ZM8 18C8.55 18 9 17.55 9 17V7C9 6.45 8.55 6 8 6C7.45 6 7 6.45 7 7V17C7 17.55 7.45 18 8 18Z"
                   fill="#333333"
+                  animate={eqControls}
+                  variants={variants2}
+                />
+                <motion.path
+                  d="M13 21C13 21.55 12.55 22 12 22C11.45 22 11 21.55 11 21V3C11 2.45 11.45 2 12 2C12.55 2 13 2.45 13 3V21Z"
+                  fill="#333333"
+                  animate={eqControls}
+                  variants={variants3}
+                />
+                <motion.path
+                  d="M5 13C5 13.55 4.55 14 4 14C3.45 14 3 13.55 3 13V11C3 10.45 3.45 10 4 10C4.55 10 5 10.45 5 11V13Z"
+                  fill="#333333"
+                  animate={eqControls}
+                  variants={variants1}
+                />
+                <motion.path
+                  d="M17 17C17 17.55 16.55 18 16 18C15.45 18 15 17.55 15 17V7C15 6.45 15.45 6 16 6C16.55 6 17 6.45 17 7V17Z"
+                  fill="#333333"
+                  animate={eqControls}
+                  variants={variants4}
+                />
+                <motion.path
+                  d="M19 13V11C19 10.45 19.45 10 20 10C20.55 10 21 10.45 21 11V13C21 13.55 20.55 14 20 14C19.45 14 19 13.55 19 13Z"
+                  fill="#333333"
+                  animate={eqControls}
+                  variants={variants5}
                 />
               </g>
               <defs>
-                <clipPath id="clip0_769_46">
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="white"
-                    transform="translate(0.5)"
-                  />
+                <clipPath id="clip0_872_83">
+                  <rect width="24" height="24" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
+            </motion.svg>
           )}
           <p>{planTasks ? 'go back' : 'help me plan'}</p>
         </motion.div>
