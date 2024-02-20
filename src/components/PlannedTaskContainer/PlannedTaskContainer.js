@@ -16,7 +16,7 @@ const PlannedTaskContainer = ({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: animationDelay
+        staggerChildren: animationDelay,
       },
     },
   };

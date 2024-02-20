@@ -5,7 +5,6 @@ import {
   LayoutGroup,
   useAnimationControls,
   easeInOut,
-  easeIn,
 } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card';
@@ -41,6 +40,7 @@ const Base = () => {
         duration: 0.75,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatType: 'mirror'
       },
     },
   };
@@ -53,6 +53,7 @@ const Base = () => {
         duration: 0.75,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatType: 'mirror',
         delay: 0.3
       },
     },
@@ -65,6 +66,7 @@ const Base = () => {
         duration: 0.75,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatType: 'mirror',
         delay: 0.6
       },
     },
@@ -77,6 +79,7 @@ const Base = () => {
         duration: 0.75,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatType: 'mirror',
         delay: 0.9
       },
     },
@@ -89,6 +92,7 @@ const Base = () => {
         duration: 0.75,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatType: 'mirror',
         delay: 1.2
       },
     },
