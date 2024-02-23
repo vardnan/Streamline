@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
-import {
-  motion,
-  cubicBezier,
-  AnimatePresence,
-  easeInOut,
-  easeIn,
-  easeOut,
-} from 'framer-motion';
+import { motion, cubicBezier, AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
 import Todos from '../Todos/Todos';
@@ -45,6 +38,27 @@ const Page = () => {
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const categoryMap = {
+        Digit1: 'importantUrgent',
+        Digit2: 'importantNotUrgent',
+        Digit3: 'notImportantUrgent',
+        Digit4: 'notImportantNotUrgent',
+      };
+
+      const newCategory = categoryMap[event.code];
+
+      if (newCategory && newCategory !== currentCategory) {
+        setCurrentCategory(newCategory);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [currentCategory]);
 
   const deleteTodo = (todoId) => {
     setTodos((currentTodos) => {
@@ -203,12 +217,12 @@ const Page = () => {
   };
 
   const boxShadowArray = {
-    'importantUrgent' : '-10px 10px 100px rgba(121, 22, 22, 0.14)',
-    'importantNotUrgent' : '-10px 10px 100px rgba(22, 117, 100, 0.17)',
-    'notImportantUrgent' : '-10px 10px 100px rgba(17, 87, 128, 0.17)',
-    'notImportantNotUrgent' : '-10px 10px 100px rgba(75, 75, 75, 0.17)',
-  }
-    
+    importantUrgent: '-10px 10px 100px rgba(121, 22, 22, 0.14)',
+    importantNotUrgent: '-10px 10px 100px rgba(22, 117, 100, 0.17)',
+    notImportantUrgent: '-10px 10px 100px rgba(17, 87, 128, 0.17)',
+    notImportantNotUrgent: '-10px 10px 100px rgba(75, 75, 75, 0.17)',
+  };
+
   return (
     <motion.div id="page-container">
       <motion.div
@@ -239,7 +253,11 @@ const Page = () => {
             id="streamline-button"
             initial={{ opacity: 0, y: 11 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.8, type: cubicBezier(0.25, 1, 0.5, 1) }}
+            transition={{
+              duration: 0.65,
+              delay: 0.8,
+              type: cubicBezier(0.25, 1, 0.5, 1),
+            }}
             whileHover={{
               scale: 1.07,
               transition: { duration: 0.1 },
@@ -252,8 +270,12 @@ const Page = () => {
           className="page"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, type: cubicBezier(0.25, 1, 0.5, 1), delay: 0.3 }}
-          style={{boxShadow: boxShadowArray[currentCategory]}}
+          transition={{
+            duration: 0.8,
+            type: cubicBezier(0.25, 1, 0.5, 1),
+            delay: 0.3,
+          }}
+          style={{ boxShadow: boxShadowArray[currentCategory] }}
         >
           <div className="page-color-block" style={{ backgroundColor: color }}>
             <AnimatePresence mode="wait">
