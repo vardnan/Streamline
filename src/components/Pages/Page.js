@@ -159,6 +159,8 @@ const Page = () => {
       localStorage.setItem('todos', JSON.stringify(updatedTodos));
       return updatedTodos;
     });
+
+    handleEdit(newTodo);
   };
 
   const handleOnDragEnd = (result) => {
