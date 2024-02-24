@@ -1,6 +1,7 @@
 import React from 'react';
 import { cubicBezier, motion } from 'framer-motion';
 import '../Base/Base.css';
+import '../PlannedTaskContainer/PlannedTaskContainer.css';
 
 const PlannedTaskContainer = ({
   priorityLevel,
