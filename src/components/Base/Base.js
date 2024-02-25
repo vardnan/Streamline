@@ -9,6 +9,7 @@ import {
 import './Base.css';
 import Card from '../Card/Card';
 import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
+import '../PlannedTaskContainer/PlannedTaskContainer.css';
 
 const Base = () => {
   const [plannedTasks, setPlannedTasks] = useState([]);

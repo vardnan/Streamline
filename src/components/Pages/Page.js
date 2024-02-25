@@ -39,26 +39,26 @@ const Page = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      const categoryMap = {
-        Digit1: 'importantUrgent',
-        Digit2: 'importantNotUrgent',
-        Digit3: 'notImportantUrgent',
-        Digit4: 'notImportantNotUrgent',
-      };
+  // useEffect(() => {
+  //   const handleKeyPress = (event) => {
+  //     const categoryMap = {
+  //       Digit1: 'importantUrgent',
+  //       Digit2: 'importantNotUrgent',
+  //       Digit3: 'notImportantUrgent',
+  //       Digit4: 'notImportantNotUrgent',
+  //     };
 
-      const newCategory = categoryMap[event.code];
+  //     const newCategory = categoryMap[event.code];
 
-      if (newCategory && newCategory !== currentCategory) {
-        setCurrentCategory(newCategory);
-      }
-    };
+  //     if (newCategory && newCategory !== currentCategory) {
+  //       setCurrentCategory(newCategory);
+  //     }
+  //   };
 
-    window.addEventListener('keydown', handleKeyPress);
+  //   window.addEventListener('keydown', handleKeyPress);
 
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentCategory]);
+  //   return () => window.removeEventListener('keydown', handleKeyPress);
+  // }, [currentCategory]);
 
   const deleteTodo = (todoId) => {
     setTodos((currentTodos) => {
