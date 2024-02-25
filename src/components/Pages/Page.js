@@ -59,25 +59,33 @@ const Page = () => {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
+      // Check if the currently focused element is an input or textarea
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        // If so, don't switch categories
+        return;
+      }
+  
       const categoryMap = {
         Digit1: 'importantUrgent',
         Digit2: 'importantNotUrgent',
         Digit3: 'notImportantUrgent',
         Digit4: 'notImportantNotUrgent',
       };
-
+  
       const newCategory = categoryMap[event.code];
-
-      if (newCategory && newCategory !== currentCategory.current) {
+  
+      // Since you're using currentCategoryRef in other parts, 
+      // ensure consistency by referring to currentCategoryRef for the current state
+      if (newCategory && newCategory !== currentCategoryRef.current) {
         setCurrentCategory(newCategory);
       }
     };
-
+  
     window.addEventListener('keydown', handleKeyPress);
-
+  
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
-
+  }, []); // Dependencies are not needed since we're using refs
+  
   const handlePriorityChange = (newCategory) => {
     setCurrentCategory(newCategory);
   };
