@@ -1,4 +1,7 @@
 #parent {
+    /* display: flex;
+    justify-content: center;
+    flex-direction: column; */
     min-height: 100vh;
     gap: 0.75rem;
     overflow: hidden;
@@ -13,6 +16,10 @@
     position: relative;
     gap: 0.75rem;
     padding: 1.5rem;
+}
+
+#relative-container {
+
 }
 
 .background {
@@ -159,6 +166,73 @@
 
 }
 
+.plannedTodoDivider {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    justify-content: space-between;
+    color: white;
+    border-radius: 25px;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 1rem;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.plannedTodoDivider p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+#plannedTasks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.plannedPriorityNumber {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
+    /* Makes the div circular */
+    z-index: 1;
+    min-width: 2.625rem;
+    /* Size of the circle */
+    min-height: 2.625rem;
+    /* Size of the circle */
+    width: 2.625rem;
+    /* Size of the circle */
+    height: 2.625rem;
+    /* Size of the circle */
+    font-size: 1.25rem;
+    font-weight: 600;
+    /* Adjust the font size as necessary */
+    color: #000;
+    /* Change the text color as needed */
+}
+
+#noPlannedTasks {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    gap: 0.5rem;
+}
+
+#noPlannedTasksText {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+}
+
 @media only screen and (min-width: 1024px) {
 
     #container-two {
@@ -191,4 +265,10 @@
         gap: 0;
     }
 
+}
+
+@media only screen and (max-width: 430px) {
+    #noPlannedTasks {
+        flex-direction: column;
+    }
 }
