@@ -9,7 +9,9 @@ import { initialTodos } from '../../data';
 
 const Page = () => {
   const location = useLocation();
-  const { color, priorityText, todoCategory } = location.state;
+  const { todoCategory } = location.state || {
+    todoCategory: 'importantUrgent',
+  };
 
   const getInitialTodos = () => {
     const savedTodos = localStorage.getItem('todos');
@@ -19,15 +21,31 @@ const Page = () => {
 
   // Corrected useState for currentCategory
   const [todos, setTodos] = useState(getInitialTodos);
-  const [currentCategory, setCurrentCategory] = useState(
-    todoCategory ? todoCategory : 'importantUrgent'
-  );
+  const [currentCategory, setCurrentCategory] = useState(todoCategory);
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
   const [countdowns, setCountdowns] = useState({});
   const timeoutRefs = useRef({});
   const currentCategoryRef = useRef(currentCategory);
   const lastEnterTimeRef = useRef(null);
+
+  const priorityConfig = {
+    importantUrgent: { color: '#791616', priorityText: 'Important & Urgent' },
+    importantNotUrgent: {
+      color: '#4D6A65',
+      priorityText: 'Important & Not Urgent',
+    },
+    notImportantUrgent: {
+      color: '#486B7F',
+      priorityText: 'Not Important & Urgent',
+    },
+    notImportantNotUrgent: {
+      color: '#767676',
+      priorityText: 'Not Important & Not Urgent',
+    },
+  };
+
+  const { color, priorityText } = priorityConfig[currentCategory];
 
   // Update the ref whenever the currentCategory changes
   useEffect(() => {
@@ -39,26 +57,30 @@ const Page = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  // useEffect(() => {
-  //   const handleKeyPress = (event) => {
-  //     const categoryMap = {
-  //       Digit1: 'importantUrgent',
-  //       Digit2: 'importantNotUrgent',
-  //       Digit3: 'notImportantUrgent',
-  //       Digit4: 'notImportantNotUrgent',
-  //     };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const categoryMap = {
+        Digit1: 'importantUrgent',
+        Digit2: 'importantNotUrgent',
+        Digit3: 'notImportantUrgent',
+        Digit4: 'notImportantNotUrgent',
+      };
 
-  //     const newCategory = categoryMap[event.code];
+      const newCategory = categoryMap[event.code];
 
-  //     if (newCategory && newCategory !== currentCategory) {
-  //       setCurrentCategory(newCategory);
-  //     }
-  //   };
+      if (newCategory && newCategory !== currentCategory.current) {
+        setCurrentCategory(newCategory);
+      }
+    };
 
-  //   window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
 
-  //   return () => window.removeEventListener('keydown', handleKeyPress);
-  // }, [currentCategory]);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
+  const handlePriorityChange = (newCategory) => {
+    setCurrentCategory(newCategory);
+  };
 
   const deleteTodo = (todoId) => {
     setTodos((currentTodos) => {
@@ -294,78 +316,50 @@ const Page = () => {
               </motion.p>
             </AnimatePresence>
             <motion.div id="priority-buttons">
-              <Link
-                to={'/todos'}
-                state={{ color: '#791616', priorityText: 'Important & urgent' }}
-                onClick={() => setCurrentCategory('importantUrgent')}
-              >
-                <button
-                  className="priority-button"
-                  style={{
-                    opacity: currentCategory === 'importantUrgent' ? 0.75 : 1,
-                    color: color,
-                  }}
-                >
-                  1
-                </button>
-              </Link>
-              <Link
-                to={'/todos'}
-                state={{
-                  color: '#4D6A65',
-                  priorityText: 'Important & not urgent',
+              <button
+                onClick={() => handlePriorityChange('importantUrgent')}
+                className="priority-button"
+                style={{
+                  opacity: currentCategory === 'importantUrgent' ? 0.75 : 1,
+                  color: color,
                 }}
-                onClick={() => setCurrentCategory('importantNotUrgent')}
               >
-                <button
-                  className="priority-button"
-                  style={{
-                    opacity:
-                      currentCategory === 'importantNotUrgent' ? 0.75 : 1,
-                    color: color,
-                  }}
-                >
-                  2
-                </button>
-              </Link>
-              <Link
-                to={'/todos'}
-                state={{
-                  color: '#486B7F',
-                  priorityText: 'Not important & urgent',
+                1
+              </button>
+              <button
+                onClick={() => handlePriorityChange('importantNotUrgent')}
+                className="priority-button"
+                style={{
+                  opacity: currentCategory === 'importantNotUrgent' ? 0.75 : 1,
+                  color: color,
                 }}
-                onClick={() => setCurrentCategory('notImportantUrgent')}
               >
-                <button
-                  className="priority-button"
-                  style={{
-                    opacity:
-                      currentCategory === 'notImportantUrgent' ? 0.75 : 1,
-                    color: color,
-                  }}
-                >
-                  3
-                </button>
-              </Link>
-              <Link
-                to={'/todos'}
-                state={{
-                  color: '#767676',
-                  priorityText: 'Not important & not urgent',
+                2
+              </button>
+
+              <button
+                onClick={() => handlePriorityChange('notImportantUrgent')}
+                className="priority-button"
+                style={{
+                  opacity: currentCategory === 'notImportantUrgent' ? 0.75 : 1,
+                  color: color,
                 }}
-                onClick={() => setCurrentCategory('notImportantNotUrgent')}
               >
-                <button
-                  className="priority-button"
-                  style={{
-                    opacity:
-                      currentCategory === 'notImportantNotUrgent' ? 0.75 : 1,
-                    color: color,
-                  }}
-                >
-                  4
-                </button>
-              </Link>
+                3
+              </button>
+
+              <button
+                onClick={() => handlePriorityChange('notImportantNotUrgent')}
+                className="priority-button"
+                style={{
+                  opacity:
+                    currentCategory === 'notImportantNotUrgent' ? 0.75 : 1,
+                  color: color,
+                }}
+              >
+                4
+              </button>
+
               <button
                 className="priority-button"
                 onClick={addTodo}
