@@ -1,9 +1,19 @@
-import  React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { cubicBezier, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import './Card.css';
 
-const Card = ({
+type Props = {
+  identifier: string;
+  blockColor: string;
+  path: string;
+  priority: string;
+  category: string;
+  priorityNumber: string;
+  animationDelay: number;
+};
+
+const Card: FC<Props> = ({
   identifier,
   blockColor,
   path,
@@ -29,10 +39,13 @@ const Card = ({
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.35,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          ease: [0.25, 1, 0.5, 1],
           delay: animationDelay,
         }}
-        whileHover={{scale: 1.035, transition: 0.1, type: cubicBezier(0.25, 1, 0.5, 1)}}
+        whileHover={{
+          scale: 1.035,
+          transition: { duration: 0.1, ease: [0.25, 1, 0.5, 1] },
+        }}
       >
         <div>
           <p
