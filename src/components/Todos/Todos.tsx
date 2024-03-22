@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from 'framer-motion';
 import '../Pages/Page.css';
@@ -120,7 +120,9 @@ const Todos = ({
                             >
                               {todo.isChecked &&
                                 countdowns[todo.id] !== undefined && (
-                                  <span id="countdown-text">{countdowns[todo.id]}</span>
+                                  <span id="countdown-text">
+                                    {countdowns[todo.id]}
+                                  </span>
                                 )}
                             </button>
                             <p

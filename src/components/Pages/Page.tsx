@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'; // Make sure to import useEffect
+import React, { useState, useEffect, useRef, FC } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, cubicBezier, AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
-import Todos from '../Todos/Todos';
+import Todos from '../Todos/Todos.tsx';
 import { initialTodos } from '../../data';
 
-const Page = () => {
+const Page: FC = () => {
   const location = useLocation();
   const { todoCategory } = location.state || {
     todoCategory: 'importantUrgent',
   };
 
   const getInitialTodos = () => {
-    const savedTodos = localStorage.getItem('todos');
+    const savedTodos: string | null = localStorage.getItem('todos');
     if (savedTodos) return JSON.parse(savedTodos);
     return initialTodos;
   };
@@ -26,8 +26,8 @@ const Page = () => {
   const [editingText, setEditingText] = useState('');
   const [countdowns, setCountdowns] = useState({});
   const timeoutRefs = useRef({});
-  const currentCategoryRef = useRef(currentCategory);
-  const lastEnterTimeRef = useRef(null);
+  const currentCategoryRef = useRef<string>(currentCategory);
+  const lastEnterTimeRef = useRef(0);
 
   const priorityConfig = {
     importantUrgent: { color: '#791616', priorityText: 'Important & Urgent' },
@@ -60,32 +60,35 @@ const Page = () => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       // Check if the currently focused element is an input or textarea
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
         // If so, don't switch categories
         return;
       }
-  
+
       const categoryMap = {
         Digit1: 'importantUrgent',
         Digit2: 'importantNotUrgent',
         Digit3: 'notImportantUrgent',
         Digit4: 'notImportantNotUrgent',
       };
-  
+
       const newCategory = categoryMap[event.code];
-  
-      // Since you're using currentCategoryRef in other parts, 
+
+      // Since you're using currentCategoryRef in other parts,
       // ensure consistency by referring to currentCategoryRef for the current state
       if (newCategory && newCategory !== currentCategoryRef.current) {
         setCurrentCategory(newCategory);
       }
     };
-  
+
     window.addEventListener('keydown', handleKeyPress);
-  
+
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []); // Dependencies are not needed since we're using refs
-  
+
   const handlePriorityChange = (newCategory) => {
     setCurrentCategory(newCategory);
   };

@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState, FC } from 'react';
 import {
   cubicBezier,
   motion,
@@ -7,104 +7,167 @@ import {
   easeInOut,
 } from 'framer-motion';
 import './Base.css';
-import Card from '../Card/Card';
-import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer';
+import Card from '../Card/Card.tsx';
+import PlannedTaskContainer from '../PlannedTaskContainer/PlannedTaskContainer.tsx';
 import '../PlannedTaskContainer/PlannedTaskContainer.css';
 
-const Base = () => {
-  const [plannedTasks, setPlannedTasks] = useState([]);
-  const [planTasks, setPlanTasks] = useState(false);
+const Base: FC = () => {
+  const [plannedTasks, setPlannedTasks] = useState<
+    string | { importantUrgentTasks: {}[]; importantNotUrgentTasks: {}[] }
+  >('Add more important tasks to get help planning');
+  const [planTasks, setPlanTasks] = useState<boolean>(false);
   const controls = useAnimationControls();
   const eqControls = useAnimationControls();
 
-
-  const initialVariant = {
+  const initialVariant: {
+    x: number;
+    transition: { duration: number; ease: string };
+  } = {
     x: 0,
     transition: {
       duration: 0.76,
-      ease: "easeOut"
-    }
+      ease: 'easeOut',
+    },
   };
 
-  const eqInitialVariant = {
+  const eqInitialVariant: {
+    scaleY: number;
+    transition: { duration: number; ease: string };
+  } = {
     scaleY: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
-    }
-  };
-
-  const variants1 = {
-    animate: {
-      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
-      transition: {
-        duration: 0.75,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: 'mirror'
-      },
+      ease: 'easeOut',
     },
   };
 
-
-  const variants2 = {
+  const variants1: {
+    animate: {
+      scaleY: number[];
+      transition: {
+        duration: number;
+        ease: string;
+        repeat: number;
+        repeatType: "reverse" | "mirror" | "loop";
+      };
+    };
+  } = {
     animate: {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: "easeInOut",
+        ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror',
-        delay: 0.3
       },
     },
   };
 
-  const variants3 = {
+  const variants2: {
+    animate: {
+      scaleY: number[];
+      transition: {
+        duration: number;
+        ease: string;
+        repeat: number;
+        repeatType: "reverse" | "mirror" | "loop";
+        delay: number;
+      };
+    };
+  } = {
+    animate: {
+      scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
+      transition: {
+        duration: 0.75,
+        ease: 'easeInOut',
+        repeat: Infinity,
+        repeatType: 'mirror',
+        delay: 0.3,
+      },
+    },
+  };
+
+  const variants3: {
+    animate: {
+      scaleY: number[];
+      transition: {
+        duration: number;
+        ease: string;
+        repeat: number;
+        repeatType: "reverse" | "mirror" | "loop";
+        delay: number;
+      };
+    };
+  } = {
     animate: {
       scaleY: [1, 1.2, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: "easeInOut",
+        ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror',
-        delay: 0.6
+        delay: 0.6,
       },
     },
   };
 
-  const variants4 = {
+  const variants4: {
+    animate: {
+      scaleY: number[];
+      transition: {
+        duration: number;
+        ease: string;
+        repeat: number;
+        repeatType: "reverse" | "mirror" | "loop";
+        delay: number;
+      };
+    };
+  } = {
     animate: {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: "easeInOut",
+        ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror',
-        delay: 0.9
+        delay: 0.9,
       },
     },
   };
 
-  const variants5 = {
+  const variants5: {
+    animate: {
+      scaleY: number[];
+      transition: {
+        duration: number;
+        ease: string;
+        repeat: number;
+        repeatType: "reverse" | "mirror" | "loop";
+        delay: number;
+      };
+    };
+  } = {
     animate: {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: "easeInOut",
+        ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror',
-        delay: 1.2
+        delay: 1.2,
       },
     },
   };
 
   const getAllTodos = () => {
-    const todos = JSON.parse(localStorage.getItem('todos')) || {};
-    const importantUrgentTodos =
-      todos.importantUrgent.filter((todo) => todo.type !== 'header') || [];
-    const importantNotUrgentTodos =
-      todos.importantNotUrgent.filter((todo) => todo.type !== 'header') || [];
+    const todos: {
+      importantUrgent: { type: string }[];
+      importantNotUrgent: { type: string }[];
+    } = JSON.parse(localStorage.getItem('todos') || "{}");
+    const importantUrgentTodos: {}[] =
+      todos.importantUrgent?.filter((todo) => todo.type !== 'header') || [];
+    const importantNotUrgentTodos: {}[] =
+      todos.importantNotUrgent?.filter((todo) => todo.type !== 'header') || [];
     return { importantUrgentTodos, importantNotUrgentTodos };
   };
 
@@ -127,7 +190,10 @@ const Base = () => {
     }
 
     // Initialize planned tasks
-    const plannedTasks = {
+    const plannedTasks: {
+      importantUrgentTasks: {}[];
+      importantNotUrgentTasks: {}[];
+    } = {
       importantUrgentTasks: [],
       importantNotUrgentTasks: [],
     };
@@ -139,7 +205,7 @@ const Base = () => {
     );
 
     // Calculate how many tasks are still needed to reach 5
-    let slotsNeeded = 5 - plannedTasks.importantUrgentTasks.length;
+    let slotsNeeded: number = 5 - plannedTasks.importantUrgentTasks.length;
 
     // If important & urgent tasks are less than 3, we can take more important & not urgent tasks, otherwise, take up to 2
     if (importantUrgentTodos.length < 3) {
@@ -163,7 +229,7 @@ const Base = () => {
       slotsNeeded > 0 &&
       importantUrgentTodos.length > plannedTasks.importantUrgentTasks.length
     ) {
-      const additionalUrgentTasks = pickRandomTasks(
+      const additionalUrgentTasks: {}[] = pickRandomTasks(
         importantUrgentTodos.filter(
           (task) => !plannedTasks.importantUrgentTasks.includes(task)
         ),
@@ -176,7 +242,9 @@ const Base = () => {
   };
 
   const handleHelpMePlan = () => {
-    const tasks = getPlannedTasks();
+    const tasks:
+      | { importantUrgentTasks: {}[]; importantNotUrgentTasks: {}[] }
+      | string = getPlannedTasks();
     setPlannedTasks(tasks);
     setPlanTasks(true);
   };
@@ -278,7 +346,11 @@ const Base = () => {
                 })
               : eqControls.start('animate')
           }
-          onHoverEnd={() => planTasks ? controls.start(initialVariant) : eqControls.start(eqInitialVariant)}
+          onHoverEnd={() =>
+            planTasks
+              ? controls.start(initialVariant)
+              : eqControls.start(eqInitialVariant)
+          }
         >
           {planTasks ? (
             <motion.svg
@@ -367,7 +439,7 @@ const Base = () => {
             </div>
           ) : (
             <>
-              <LayoutGroup layoutId="cards">
+              <LayoutGroup /*layoutId="cards"*/>
                 <motion.div id="container-one">
                   <Card
                     identifier={'card-one'}
