@@ -19,12 +19,25 @@ const Page: FC = () => {
     return initialTodos;
   };
 
-  // Corrected useState for currentCategory
-  const [todos, setTodos] = useState(getInitialTodos);
-  const [currentCategory, setCurrentCategory] = useState(todoCategory);
-  const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState('');
-  const [countdowns, setCountdowns] = useState({});
+  type TodosObject = {
+    [category: string]: {
+      type?: 'header';
+      isChecked: boolean;
+      id: string;
+      text: string;
+      isCountingDown: boolean;
+    }[];
+  };
+
+  type Countdowns = {
+    [todoId: string]: number;
+  };
+
+  const [todos, setTodos] = useState<TodosObject>(getInitialTodos);
+  const [currentCategory, setCurrentCategory] = useState<string>(todoCategory);
+  const [editingId, setEditingId] = useState<string>('');
+  const [editingText, setEditingText] = useState<string>('');
+  const [countdowns, setCountdowns] = useState<Countdowns>({});
   const timeoutRefs = useRef({});
   const currentCategoryRef = useRef<string>(currentCategory);
   const lastEnterTimeRef = useRef(0);
@@ -245,7 +258,7 @@ const Page: FC = () => {
     };
 
     setTodos(updatedTodos);
-    setEditingId(null);
+    setEditingId('');
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
 

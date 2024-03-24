@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from 'framer-motion';
 import '../Pages/Page.css';
 import '../Todos/Todos.css';
 
-const Todos = ({
+type Todo = {
+  id: string;
+  isChecked: boolean;
+  type?: 'header';
+  text: string;
+  isCountingDown: boolean;
+};
+
+type Props = {
+  todos: Todo[];
+  checkTodo: (todoId: string) => void;
+  checkedColor: string;
+  editingText: string;
+  setEditingText: (editingText: string) => void;
+  editingId: string;
+  handleEdit: (todo: Todo) => void;
+  handleSave: (id: string) => void;
+  countdowns: { [todoId: string]: number };
+};
+
+const Todos: FC<Props> = ({
   todos,
   checkTodo,
   checkedColor,
