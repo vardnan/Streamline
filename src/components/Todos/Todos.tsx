@@ -40,14 +40,14 @@ const Todos: FC<Props> = ({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15, // Stagger the animation of children
+        staggerChildren: 0.1, // Stagger the animation of children
       },
     },
   };
 
   // Item variants
   const itemVariants = {
-    hidden: { y: 3, opacity: 0 },
+    hidden: { y: 2, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
