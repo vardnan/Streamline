@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { cubicBezier, motion } from 'framer-motion';
 import '../Base/Base.css';
 import '../PlannedTaskContainer/PlannedTaskContainer.css';
 
-const PlannedTaskContainer = ({
+const PlannedTaskContainer: FC<{
+  priorityLevel: string;
+  priorityColour: string;
+  priorityCategory: string;
+  plannedTasks: { importantUrgentTasks: {}[]; importantNotUrgentTasks: {}[] };
+  priorityNumber: number;
+  animationDelay: number;
+}> = ({
   priorityLevel,
   priorityColour,
   priorityCategory,
@@ -11,7 +18,6 @@ const PlannedTaskContainer = ({
   priorityNumber,
   animationDelay,
 }) => {
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,17 +34,18 @@ const PlannedTaskContainer = ({
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring'},
+      transition: { type: 'spring' },
     },
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -15}}
+      initial={{ opacity: 0, y: -15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
-        type: cubicBezier(0.25, 1, 0.5, 1), delay: animationDelay
+        type: cubicBezier(0.25, 1, 0.5, 1),
+        delay: animationDelay,
       }}
     >
       <p style={{ fontSize: '1.5rem', margin: '0 0 1.2rem 0' }}>
@@ -77,7 +84,6 @@ const PlannedTaskContainer = ({
                 className="todo-button"
                 style={{
                   borderColor: priorityColour,
-
                 }}
               ></button>
               <p className="todo-text">{todo.text}</p>

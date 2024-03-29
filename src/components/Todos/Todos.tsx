@@ -1,10 +1,30 @@
-import { React, useState } from 'react';
+import React, { FC } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from 'framer-motion';
 import '../Pages/Page.css';
 import '../Todos/Todos.css';
 
-const Todos = ({
+type Todo = {
+  id: string;
+  isChecked: boolean;
+  type?: 'header';
+  text: string;
+  isCountingDown: boolean;
+};
+
+type Props = {
+  todos: Todo[];
+  checkTodo: (todoId: string) => void;
+  checkedColor: string;
+  editingText: string;
+  setEditingText: (editingText: string) => void;
+  editingId: string;
+  handleEdit: (todo: Todo) => void;
+  handleSave: (id: string) => void;
+  countdowns: { [todoId: string]: number };
+};
+
+const Todos: FC<Props> = ({
   todos,
   checkTodo,
   checkedColor,
@@ -20,14 +40,14 @@ const Todos = ({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15, // Stagger the animation of children
+        staggerChildren: 0.1, // Stagger the animation of children
       },
     },
   };
 
   // Item variants
   const itemVariants = {
-    hidden: { y: 3, opacity: 0 },
+    hidden: { y: 2, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -120,7 +140,9 @@ const Todos = ({
                             >
                               {todo.isChecked &&
                                 countdowns[todo.id] !== undefined && (
-                                  <span id="countdown-text">{countdowns[todo.id]}</span>
+                                  <span id="countdown-text">
+                                    {countdowns[todo.id]}
+                                  </span>
                                 )}
                             </button>
                             <p
