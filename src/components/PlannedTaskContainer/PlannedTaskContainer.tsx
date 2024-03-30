@@ -44,7 +44,7 @@ const PlannedTaskContainer: FC<{
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
-        type: cubicBezier(0.25, 1, 0.5, 1),
+        type: cubicBezier(.075, .82, .165, 1),
         delay: animationDelay,
       }}
     >

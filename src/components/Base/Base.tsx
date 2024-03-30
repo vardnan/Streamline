@@ -307,7 +307,7 @@ const Base: FC = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.6,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          type: cubicBezier(.075, .82, .165, 1),
           delay: 0.2,
         }}
       ></motion.div>
@@ -317,7 +317,7 @@ const Base: FC = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{
           duration: 0.8,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          type: cubicBezier(.075, .82, .165, 1),
           delay: 0.8,
         }}
       >
@@ -328,7 +328,7 @@ const Base: FC = () => {
         layout
         transition={{
           duration: 0.35,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          type: cubicBezier(.075, .82, .165, 1),
         }}
       >
         <motion.div
