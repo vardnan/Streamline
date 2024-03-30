@@ -277,7 +277,7 @@ const Page: FC = () => {
         animate={{ scale: 1 }}
         transition={{
           duration: 0.6,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          type: cubicBezier(.075, .82, .165, 1),
           delay: 0.2,
         }}
       ></motion.div>
@@ -287,7 +287,7 @@ const Page: FC = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{
           duration: 0.8,
-          type: cubicBezier(0.25, 1, 0.5, 1),
+          type: cubicBezier(.075, .82, .165, 1),
           delay: 0.9,
         }}
       >
@@ -302,7 +302,7 @@ const Page: FC = () => {
             transition={{
               duration: 0.65,
               delay: 0.8,
-              type: cubicBezier(0.25, 1, 0.5, 1),
+              type: cubicBezier(.075, .82, .165, 1),
             }}
             whileHover={{
               scale: 1.07,
@@ -318,7 +318,7 @@ const Page: FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 0.8,
-            type: cubicBezier(0.25, 1, 0.5, 1),
+            type: cubicBezier(.075, .82, .165, 1),
             delay: 0.3,
           }}
           style={{ boxShadow: boxShadowArray[currentCategory] }}
@@ -331,7 +331,7 @@ const Page: FC = () => {
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  type: cubicBezier(0.25, 1, 0.5, 1),
+                  type: cubicBezier(.075, .82, .165, 1),
                   duration: 0.15,
                 }}
                 exit={{ opacity: 0, y: 5 }}

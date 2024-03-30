@@ -39,12 +39,12 @@ const Card: FC<Props> = ({
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.35,
-          ease: [0.25, 1, 0.5, 1],
+          ease: [.075, .82, .165, 1],
           delay: animationDelay,
         }}
         whileHover={{
           scale: 1.035,
-          transition: { duration: 0.1, ease: [0.25, 1, 0.5, 1] },
+          transition: { duration: 0.1, ease: [.075, .82, .165, 1] },
         }}
       >
         <div>
