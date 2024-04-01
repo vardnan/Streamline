@@ -51,7 +51,7 @@ const Todos: FC<Props> = ({
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring' },
+      transition: { type: 'spring', duration: 0.8, bounce: 0.1 },
     },
   };
 

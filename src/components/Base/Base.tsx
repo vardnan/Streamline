@@ -1,10 +1,9 @@
 import React, { useState, FC } from 'react';
 import {
-  cubicBezier,
   motion,
   LayoutGroup,
   useAnimationControls,
-  easeInOut,
+  easeOut,
 } from 'framer-motion';
 import './Base.css';
 import Card from '../Card/Card.tsx';
@@ -56,7 +55,7 @@ const Base: FC = () => {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: 'easeInOut',
+        ease: 'easeOut',
         repeat: Infinity,
         repeatType: 'mirror',
       },
@@ -79,7 +78,7 @@ const Base: FC = () => {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: 'easeInOut',
+        ease: 'easeOut',
         repeat: Infinity,
         repeatType: 'mirror',
         delay: 0.3,
@@ -103,7 +102,7 @@ const Base: FC = () => {
       scaleY: [1, 1.2, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: 'easeInOut',
+        ease: 'easeOut',
         repeat: Infinity,
         repeatType: 'mirror',
         delay: 0.6,
@@ -127,7 +126,7 @@ const Base: FC = () => {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: 'easeInOut',
+        ease: 'easeOut',
         repeat: Infinity,
         repeatType: 'mirror',
         delay: 0.9,
@@ -151,7 +150,7 @@ const Base: FC = () => {
       scaleY: [1, 1.4, 0.8, 1], // These values can be adjusted
       transition: {
         duration: 0.75,
-        ease: 'easeInOut',
+        ease: 'easeOut',
         repeat: Infinity,
         repeatType: 'mirror',
         delay: 1.2,
@@ -281,7 +280,7 @@ const Base: FC = () => {
               priorityCategory="importantUrgentTasks"
               plannedTasks={plannedTasks}
               priorityNumber={1}
-              animationDelay={0.3}
+              animationDelay={0.2}
             />
           )}
           {plannedTasks.importantNotUrgentTasks.length >= 1 && (
@@ -291,7 +290,7 @@ const Base: FC = () => {
               priorityCategory="importantNotUrgentTasks"
               plannedTasks={plannedTasks}
               priorityNumber={2}
-              animationDelay={0.5}
+              animationDelay={0.4}
             />
           )}
         </motion.div>
@@ -306,8 +305,9 @@ const Base: FC = () => {
         initial={{ opacity: 1, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
-          duration: 0.6,
-          type: cubicBezier(.075, .82, .165, 1),
+          type: 'spring',
+          duration: 0.2,
+          bounce: 0,
           delay: 0.2,
         }}
       ></motion.div>
@@ -316,9 +316,10 @@ const Base: FC = () => {
         initial={{ opacity: 0, scale: 0.9, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{
-          duration: 0.8,
-          type: cubicBezier(.075, .82, .165, 1),
-          delay: 0.8,
+          type: 'spring',
+          duration: 1.05,
+          bounce: 0,
+          delay: 0.3,
         }}
       >
         dieter
@@ -327,8 +328,9 @@ const Base: FC = () => {
         id="holder"
         layout
         transition={{
-          duration: 0.35,
-          type: cubicBezier(.075, .82, .165, 1),
+          type: 'spring',
+          duration: 0.5,
+          bounce: 0.1,
         }}
       >
         <motion.div
@@ -340,7 +342,7 @@ const Base: FC = () => {
                   x: [0, 1.5, 0],
                   transition: {
                     repeat: Infinity,
-                    type: easeInOut,
+                    type: easeOut,
                     duration: 0.75,
                   },
                 })
@@ -448,7 +450,7 @@ const Base: FC = () => {
                     priority="Important & urgent"
                     category="importantUrgent"
                     priorityNumber="1"
-                    animationDelay={0.4}
+                    animationDelay={0.2}
                   />
                   <Card
                     identifier={'card-four'}
@@ -457,7 +459,7 @@ const Base: FC = () => {
                     priority="Not important & urgent"
                     category="notImportantUrgent"
                     priorityNumber="3"
-                    animationDelay={0.8}
+                    animationDelay={0.6}
                   />
                 </motion.div>
                 <motion.div id="container-two">
@@ -468,7 +470,7 @@ const Base: FC = () => {
                     priority="Important & not urgent"
                     category="importantNotUrgent"
                     priorityNumber="2"
-                    animationDelay={0.6}
+                    animationDelay={0.4}
                   />
                   <Card
                     identifier={'card-three'}
@@ -477,7 +479,7 @@ const Base: FC = () => {
                     priority="Not important & not urgent"
                     category="notImportantNotUrgent"
                     priorityNumber="4"
-                    animationDelay={1}
+                    animationDelay={0.8}
                   />
                 </motion.div>
               </LayoutGroup>
