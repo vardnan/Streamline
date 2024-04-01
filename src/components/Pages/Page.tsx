@@ -313,13 +313,13 @@ const Page: FC = () => {
           className="page-background"
           initial={{ scale: 0.5 }}
           animate={{ scale: 1 }}
-          transition={{ type: "spring", duration: 3, bounce: 0 }}
+          transition={{ type: "spring", duration: 0.2, bounce: 0 }}
         ></motion.div>
         <motion.div
           className="page-background-logo"
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ type: "spring", duration: 3, bounce: 0 }}
+          transition={{ type: "spring", duration: 2, bounce: 0 }}
         >
           dieter
         </motion.div>
