@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef, FC } from 'react'; // Make sure to import useEffect
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useLocation, Link } from 'react-router-dom';
-import { motion, cubicBezier, AnimatePresence } from 'framer-motion';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import {
+  motion,
+  cubicBezier,
+  AnimatePresence,
+  useMotionValue,
+  useTransform,
+  PanInfo
+} from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import './Page.css';
 import Todos from '../Todos/Todos.tsx';
@@ -269,146 +276,187 @@ const Page: FC = () => {
     notImportantNotUrgent: '-10px 10px 100px rgba(75, 75, 75, 0.17)',
   };
 
+  const y = useMotionValue(0);
+  const opacity = useTransform(y, [0, 280], [1, 0.01]);
+  const navigate = useNavigate();
+  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    // Check the drag distance using info.point.y
+    if (info.point.y > 280) {
+      navigate('/');
+    }
+  };
+
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    // Check the drag distance using info.point.y
+    if (info.point.y < 280) {
+      // If the element has not been dragged enough, reset the position
+      y.set(0); // This will reset the position of the element
+      opacity.set(1); // This will reset the opacity of the element
+    } else {
+      navigate('/'); // Otherwise, navigate to the home page
+    }
+  };
+
+  
+
   return (
     <motion.div id="page-container">
       <motion.div
-        className="page-background"
-        initial={{ scale: 0.5 }}
-        animate={{ scale: 1 }}
-        transition={{
-          duration: 0.6,
-          type: cubicBezier(.075, .82, .165, 1),
-          delay: 0.2,
-        }}
-      ></motion.div>
-      <motion.div
-        className="page-background-logo"
-        initial={{ opacity: 0, scale: 0.9, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{
-          duration: 0.8,
-          type: cubicBezier(.075, .82, .165, 1),
-          delay: 0.9,
-        }}
+        drag="y" // enables dragging on y-axis
+        style={{ y, opacity }} // apply the dynamic values
+        dragConstraints={{ top: 0 }} // limit dragging to downwards only
+        onDrag={handleDrag}
+        dragElastic={0.5}
+        dragMomentum={false}
+        animate={{ y: 0, opacity: 1 }}
+        onDragEnd={handleDragEnd}
+        transition={{ type: 'spring', damping: 30, mass: 1, stiffness: 0 }}
       >
-        dieter
-      </motion.div>
-      <div style={{ boxSizing: 'border-box' }}>
-        <Link id="streamline-logo" to={'/'}>
-          <motion.button
-            id="streamline-button"
-            initial={{ opacity: 0, y: 11 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.65,
-              delay: 0.8,
-              type: cubicBezier(.075, .82, .165, 1),
-            }}
-            whileHover={{
-              scale: 1.07,
-              transition: { duration: 0.1 },
-            }}
-          >
-            dieter
-          </motion.button>
-        </Link>
         <motion.div
-          className="page"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          className="page-background"
+          initial={{ scale: 0.5 }}
+          animate={{ scale: 1 }}
+          transition={{
+            duration: 0.6,
+            type: cubicBezier(0.075, 0.82, 0.165, 1),
+            delay: 0.2,
+          }}
+        ></motion.div>
+        <motion.div
+          className="page-background-logo"
+          initial={{ opacity: 0, scale: 0.9, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{
             duration: 0.8,
-            type: cubicBezier(.075, .82, .165, 1),
-            delay: 0.3,
+            type: cubicBezier(0.075, 0.82, 0.165, 1),
+            delay: 0.9,
           }}
-          style={{ boxShadow: boxShadowArray[currentCategory] }}
         >
-          <div className="page-color-block" style={{ backgroundColor: color }}>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={priorityText}
-                className="priority-text"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  type: cubicBezier(.075, .82, .165, 1),
-                  duration: 0.15,
-                }}
-                exit={{ opacity: 0, y: 5 }}
-              >
-                {priorityText}
-              </motion.p>
-            </AnimatePresence>
-            <motion.div id="priority-buttons">
-              <button
-                onClick={() => handlePriorityChange('importantUrgent')}
-                className="priority-button"
-                style={{
-                  opacity: currentCategory === 'importantUrgent' ? 0.75 : 1,
-                  color: color,
-                }}
-              >
-                1
-              </button>
-              <button
-                onClick={() => handlePriorityChange('importantNotUrgent')}
-                className="priority-button"
-                style={{
-                  opacity: currentCategory === 'importantNotUrgent' ? 0.75 : 1,
-                  color: color,
-                }}
-              >
-                2
-              </button>
-
-              <button
-                onClick={() => handlePriorityChange('notImportantUrgent')}
-                className="priority-button"
-                style={{
-                  opacity: currentCategory === 'notImportantUrgent' ? 0.75 : 1,
-                  color: color,
-                }}
-              >
-                3
-              </button>
-
-              <button
-                onClick={() => handlePriorityChange('notImportantNotUrgent')}
-                className="priority-button"
-                style={{
-                  opacity:
-                    currentCategory === 'notImportantNotUrgent' ? 0.75 : 1,
-                  color: color,
-                }}
-              >
-                4
-              </button>
-
-              <button
-                className="priority-button"
-                onClick={addTodo}
-                style={{ color: color }}
-              >
-                +
-              </button>
-            </motion.div>
-          </div>
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Todos
-              key={currentCategory}
-              todos={todos[currentCategory]}
-              checkTodo={checkTodo}
-              checkedColor={color}
-              editingText={editingText}
-              setEditingText={setEditingText}
-              editingId={editingId}
-              handleEdit={handleEdit}
-              handleSave={handleSave}
-              countdowns={countdowns}
-            />
-          </DragDropContext>
+          dieter
         </motion.div>
-      </div>
+        <div style={{ boxSizing: 'border-box' }}>
+          <Link id="streamline-logo" to={'/'}>
+            <motion.button
+              id="streamline-button"
+              initial={{ opacity: 0, y: 11 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.65,
+                delay: 0.8,
+                type: cubicBezier(0.075, 0.82, 0.165, 1),
+              }}
+              whileHover={{
+                scale: 1.07,
+                transition: { duration: 0.1 },
+              }}
+            >
+              dieter
+            </motion.button>
+          </Link>
+          <motion.div
+            className="page"
+            initial={{ opacity: 0, scale: 0.9, y: 20}}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              type: cubicBezier(0.075, 0.82, 0.165, 1),
+              delay: 0.3,
+            }}
+            style={{ boxShadow: boxShadowArray[currentCategory] }}
+          >
+            <div
+              className="page-color-block"
+              style={{ backgroundColor: color }}
+            >
+                          <div id="grab-handle"></div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={priorityText}
+                  className="priority-text"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    type: cubicBezier(0.075, 0.82, 0.165, 1),
+                    duration: 0.15,
+                  }}
+                  exit={{ opacity: 0, y: 5 }}
+                >
+                  {priorityText}
+                </motion.p>
+              </AnimatePresence>
+              <motion.div id="priority-buttons">
+                <button
+                  onClick={() => handlePriorityChange('importantUrgent')}
+                  className="priority-button"
+                  style={{
+                    opacity: currentCategory === 'importantUrgent' ? 0.75 : 1,
+                    color: color,
+                  }}
+                >
+                  1
+                </button>
+                <button
+                  onClick={() => handlePriorityChange('importantNotUrgent')}
+                  className="priority-button"
+                  style={{
+                    opacity:
+                      currentCategory === 'importantNotUrgent' ? 0.75 : 1,
+                    color: color,
+                  }}
+                >
+                  2
+                </button>
+
+                <button
+                  onClick={() => handlePriorityChange('notImportantUrgent')}
+                  className="priority-button"
+                  style={{
+                    opacity:
+                      currentCategory === 'notImportantUrgent' ? 0.75 : 1,
+                    color: color,
+                  }}
+                >
+                  3
+                </button>
+
+                <button
+                  onClick={() => handlePriorityChange('notImportantNotUrgent')}
+                  className="priority-button"
+                  style={{
+                    opacity:
+                      currentCategory === 'notImportantNotUrgent' ? 0.75 : 1,
+                    color: color,
+                  }}
+                >
+                  4
+                </button>
+
+                <button
+                  className="priority-button"
+                  onClick={addTodo}
+                  style={{ color: color }}
+                >
+                  +
+                </button>
+              </motion.div>
+            </div>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Todos
+                key={currentCategory}
+                todos={todos[currentCategory]}
+                checkTodo={checkTodo}
+                checkedColor={color}
+                editingText={editingText}
+                setEditingText={setEditingText}
+                editingId={editingId}
+                handleEdit={handleEdit}
+                handleSave={handleSave}
+                countdowns={countdowns}
+              />
+            </DragDropContext>
+          </motion.div>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -62,6 +62,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    position: relative;
 }
 
 #streamline-logo {
@@ -133,6 +135,17 @@
     opacity: 70%;
 }
 
+#grab-handle {
+    width: 6.25rem;
+    height: 0.5625rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.30);
+    position: absolute;
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%, -50%);
+}
+
 @media only screen and (max-width: 540px) {
 
     html {
@@ -164,6 +177,10 @@
         flex-wrap: wrap;
         justify-content: flex-end;
     }
+
+    #grab-handle {
+        top: 13%;
+    }
 }
 
 @media only screen and (max-width: 700px) and (min-width: 635px) {
@@ -181,7 +198,7 @@
         flex-wrap: nowrap;
         justify-content: flex-end;
     }
-    
+
 }
 
 @media only screen and (max-width: 635px) and (min-width: 540px) {
@@ -201,4 +218,7 @@
         gap: 1rem;
     }
 
+    #grab-handle {
+        top: 13%;
+    }
 }
