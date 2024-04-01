@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { cubicBezier, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import '../Base/Base.css';
 import '../PlannedTaskContainer/PlannedTaskContainer.css';
 
@@ -34,7 +34,7 @@ const PlannedTaskContainer: FC<{
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring' },
+      transition: { type: 'spring', duration: 0.8, bounce: 0.1 },
     },
   };
 
@@ -43,8 +43,9 @@ const PlannedTaskContainer: FC<{
       initial={{ opacity: 0, y: -15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.6,
-        type: cubicBezier(.075, .82, .165, 1),
+        type: 'spring',
+        duration: 1.5,
+        bounce: 0,
         delay: animationDelay,
       }}
     >

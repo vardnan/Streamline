@@ -38,13 +38,14 @@ const Card: FC<Props> = ({
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
-          duration: 0.35,
-          ease: [.075, .82, .165, 1],
+          type: "spring", 
+          duration: 0.25, 
+          bounce: 0,
           delay: animationDelay,
         }}
         whileHover={{
           scale: 1.035,
-          transition: { duration: 0.1, ease: [.075, .82, .165, 1], delay: 0 },
+          transition: { type: "spring", duration: 0.25, bounce: 0 }
         }}
       >
         <div>

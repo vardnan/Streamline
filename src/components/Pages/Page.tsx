@@ -3,7 +3,6 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   motion,
-  cubicBezier,
   AnimatePresence,
   useMotionValue,
   useTransform,
@@ -297,8 +296,6 @@ const Page: FC = () => {
     }
   };
 
-  
-
   return (
     <motion.div id="page-container">
       <motion.div
@@ -310,27 +307,19 @@ const Page: FC = () => {
         dragMomentum={false}
         animate={{ y: 0, opacity: 1 }}
         onDragEnd={handleDragEnd}
-        transition={{ type: 'spring', damping: 30, mass: 1, stiffness: 0 }}
+        transition={{ type: "spring", duration: 0.6, bounce: 0.1 }}
       >
         <motion.div
           className="page-background"
           initial={{ scale: 0.5 }}
           animate={{ scale: 1 }}
-          transition={{
-            duration: 0.6,
-            type: cubicBezier(0.075, 0.82, 0.165, 1),
-            delay: 0.2,
-          }}
+          transition={{ type: "spring", duration: 3, bounce: 0 }}
         ></motion.div>
         <motion.div
           className="page-background-logo"
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            type: cubicBezier(0.075, 0.82, 0.165, 1),
-            delay: 0.9,
-          }}
+          transition={{ type: "spring", duration: 3, bounce: 0 }}
         >
           dieter
         </motion.div>
@@ -340,11 +329,7 @@ const Page: FC = () => {
               id="streamline-button"
               initial={{ opacity: 0, y: 11 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.65,
-                delay: 0.8,
-                type: cubicBezier(0.075, 0.82, 0.165, 1),
-              }}
+              transition={{ type: "spring", duration: 3, bounce: 0.25 }}
               whileHover={{
                 scale: 1.07,
                 transition: { duration: 0.1 },
@@ -357,11 +342,7 @@ const Page: FC = () => {
             className="page"
             initial={{ opacity: 0, scale: 0.9, y: 20}}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              type: cubicBezier(0.075, 0.82, 0.165, 1),
-              delay: 0.3,
-            }}
+            transition={{type: "spring", duration: 1.85, bounce: 0}}
             style={{ boxShadow: boxShadowArray[currentCategory] }}
           >
             <div
@@ -373,12 +354,9 @@ const Page: FC = () => {
                 <motion.p
                   key={priorityText}
                   className="priority-text"
-                  initial={{ opacity: 0, y: 5 }}
+                  initial={{ opacity: 0, y: 3 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    type: cubicBezier(0.075, 0.82, 0.165, 1),
-                    duration: 0.15,
-                  }}
+                  transition={{type: "spring", duration: 0.25, bounce: 0}}
                   exit={{ opacity: 0, y: 5 }}
                 >
                   {priorityText}
