@@ -44,7 +44,7 @@ const Card: FC<Props> = ({
         }}
         whileHover={{
           scale: 1.035,
-          transition: { duration: 0.1, ease: [.075, .82, .165, 1] },
+          transition: { duration: 0.1, ease: [.075, .82, .165, 1], delay: 0 },
         }}
       >
         <div>

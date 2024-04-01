@@ -368,6 +368,7 @@ const Page: FC = () => {
               className="page-color-block"
               style={{ backgroundColor: color }}
             >
+                          <div id="grab-handle"></div>
               <AnimatePresence mode="wait">
                 <motion.p
                   key={priorityText}
