@@ -55,8 +55,7 @@
 
 .page-color-block {
     width: 100%;
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 1.3rem;
     min-height: 13%;
     display: flex;
     flex-direction: row;
@@ -164,7 +163,6 @@
 
     .page-color-block {
         padding-top: 2rem;
-        padding-bottom: 1rem;
         flex-direction: column;
         justify-content: center;
         gap: 1rem;
@@ -187,7 +185,6 @@
 
     .page-color-block {
         padding-top: 2rem;
-        padding-bottom: 1rem;
     }
 
     #priority-buttons {
@@ -213,7 +210,6 @@
 
     .page-color-block {
         padding-top: 2rem;
-        padding-bottom: 1rem;
         flex-direction: column;
         justify-content: center;
         gap: 1rem;
