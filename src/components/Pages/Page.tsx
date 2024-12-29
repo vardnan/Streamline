@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, FC } from 'react'; // Make sure to import useEffect
-import { DragDropContext } from 'react-beautiful-dnd';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   motion,
@@ -229,19 +228,6 @@ const Page: FC = () => {
     handleEdit(newTodo);
   };
 
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return;
-
-    const categoryTodos = Array.from(todos[currentCategory]);
-    const [reorderedItem] = categoryTodos.splice(result.source.index, 1);
-    categoryTodos.splice(result.destination.index, 0, reorderedItem);
-
-    setTodos({
-      ...todos,
-      [currentCategory]: categoryTodos,
-    });
-  };
-
   const handleEdit = (todo) => {
     setEditingId(todo.id);
     setEditingText(todo.text === 'New thing to do' ? '' : todo.text);
@@ -275,38 +261,11 @@ const Page: FC = () => {
     notImportantNotUrgent: '-10px 10px 100px rgba(75, 75, 75, 0.17)',
   };
 
-  const y = useMotionValue(0);
-  const opacity = useTransform(y, [0, 280], [1, 0.01]);
-  const navigate = useNavigate();
-  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    // Check the drag distance using info.point.y
-    if (info.point.y > 280) {
-      navigate('/');
-    }
-  };
-
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    // Check the drag distance using info.point.y
-    if (info.point.y < 280) {
-      // If the element has not been dragged enough, reset the position
-      y.set(0); // This will reset the position of the element
-      opacity.set(1); // This will reset the opacity of the element
-    } else {
-      navigate('/'); // Otherwise, navigate to the home page
-    }
-  };
-
   return (
     <motion.div id="page-container">
       <motion.div
-        drag="y" // enables dragging on y-axis
         style={{ y, opacity }} // apply the dynamic values
-        dragConstraints={{ top: 0 }} // limit dragging to downwards only
-        onDrag={handleDrag}
-        dragElastic={0.5}
-        dragMomentum={false}
         animate={{ y: 0, opacity: 1 }}
-        onDragEnd={handleDragEnd}
         transition={{ type: "spring", duration: 0.6, bounce: 0.1 }}
       >
         <motion.div
@@ -418,7 +377,6 @@ const Page: FC = () => {
                 </button>
               </motion.div>
             </div>
-            <DragDropContext onDragEnd={handleOnDragEnd}>
               <Todos
                 key={currentCategory}
                 todos={todos[currentCategory]}
@@ -431,7 +389,6 @@ const Page: FC = () => {
                 handleSave={handleSave}
                 countdowns={countdowns}
               />
-            </DragDropContext>
           </motion.div>
         </div>
       </motion.div>
